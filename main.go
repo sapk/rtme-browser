@@ -24,6 +24,7 @@ func main() {
 	//TODO use cobra for validation and use env and file config
 	debug := flag.Bool("v", false, "sets log level to debug")
 	listenAddr := flag.String("addr", ":3000", "listening address")
+	allowCORS := flag.Bool("cors", false, "allow cors")
 	dbType := flag.String("db-type", "mssql", "database address")
 	dbRTMEURL := flag.String("db-rtme", "server=localhost;user id=sa;password=g3n3sys;database=RTME", "RTME database url definition (xorm definition)")
 	dbCFGURL := flag.String("db-cfg", "server=localhost;user id=sa;password=g3n3sys;database=CFG", "CFG database url definition (xorm definition)")
@@ -39,12 +40,12 @@ func main() {
 	})
 
 	u := parseAddr(*listenAddr)
-	quit := startServer(u, *dbType, *dbRTMEURL, *dbCFGURL)
+	quit := startServer(u, *allowCORS, *dbType, *dbRTMEURL, *dbCFGURL)
 	go startBrowser(u)
 	<-quit //Wait for quit
 }
 
-func startServer(u url.URL, dbType, dbRTMEURL, dbCFGURL string) chan bool {
+func startServer(u url.URL, allowCORS bool, dbType, dbRTMEURL, dbCFGURL string) chan bool {
 	quit := make(chan bool)
 	//DB connexion
 	rtmeDB, err := db.NewDBFromURL(dbType, dbRTMEURL)
@@ -63,7 +64,7 @@ func startServer(u url.URL, dbType, dbRTMEURL, dbCFGURL string) chan bool {
 	//Setup server
 	gin.SetMode(gin.ReleaseMode)
 	go func() {
-		router.StartServer(u, rtmeDB, cfgDB)
+		router.StartServer(u, allowCORS, rtmeDB, cfgDB)
 		quit <- true
 	}()
 	return quit

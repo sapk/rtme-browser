@@ -5,6 +5,7 @@ import (
 
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
+	"github.com/rs/zerolog/log"
 
 	"github.com/sapk/go-genesys/db"
 
@@ -13,7 +14,7 @@ import (
 	v1 "github.com/sapk/rtme-browser/router/api/v1"
 )
 
-func generateRouter(rtmeDB, cfgDB *db.DB) *gin.Engine {
+func generateRouter(allowCORS bool, rtmeDB, cfgDB *db.DB) *gin.Engine {
 	r := gin.New()
 	//Configure logger
 	r.Use(logger())
@@ -27,6 +28,12 @@ func generateRouter(rtmeDB, cfgDB *db.DB) *gin.Engine {
 	})
 
 	api := r.Group("/api/v1")
+	if allowCORS {
+		//CORS
+		log.Info().Msg("Allow CORS request")
+		api.Use(cors)
+		api.Use(options)
+	}
 	//API v1
 	v1.SetupRouter(api, rtmeDB, cfgDB)
 
@@ -37,4 +44,21 @@ func generateRouter(rtmeDB, cfgDB *db.DB) *gin.Engine {
 		c.Redirect(http.StatusMovedPermanently, "/ui/")
 	})
 	return r
+}
+func cors(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", c.GetHeader("Origin")) //TODO Filter
+	c.Header("Vary", "Origin")
+}
+func options(c *gin.Context) {
+	if c.Request.Method != "OPTIONS" {
+		c.Next()
+	} else {
+		c.Header("Access-Control-Allow-Origin", c.GetHeader("Origin")) //TODO Filter
+		c.Header("Vary", "Origin")
+		c.Header("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE,OPTIONS")
+		c.Header("Access-Control-Allow-Headers", "Authorization, Origin, Content-Type, Accept")
+		c.Header("Allow", "HEAD,GET,POST,PUT,PATCH,DELETE,OPTIONS")
+		c.Header("Content-Type", "application/json")
+		c.AbortWithStatus(http.StatusOK)
+	}
 }

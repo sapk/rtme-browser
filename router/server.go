@@ -14,8 +14,8 @@ import (
 )
 
 //StartServer start the server
-func StartServer(u url.URL, rtmeDB, cfgDB *db.DB) {
-	r := generateRouter(rtmeDB, cfgDB)
+func StartServer(u url.URL, allowCORS bool, rtmeDB, cfgDB *db.DB) {
+	r := generateRouter(allowCORS, rtmeDB, cfgDB)
 	// Listen and Server (endlessly) on http://0.0.0.0:3000
 	srv := &http.Server{
 		Addr:    u.Host,

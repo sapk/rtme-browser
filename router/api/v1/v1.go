@@ -17,8 +17,8 @@
 package v1
 
 import (
-	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 
@@ -31,8 +31,70 @@ import (
 
 //SetupRouter configure the listener
 func SetupRouter(r *gin.RouterGroup, rtmeDB, cfgDB *db.DB) {
+	r.GET("/cfg/groups", func(c *gin.Context) {
+		// swagger:operation GET /cfg/groups config cfgGroups
+		// ---
+		// summary: Get group name list
+		// produces:
+		// - application/json
+		// responses:
+		//   "400":
+		//     "$ref": "#/responses/BadRequest"
+		//   "500":
+		//     "$ref": "#/responses/InternalServerError"
+		//   "200":
+		//     "description": Groups names
+
+		//c.JSON(http.StatusNotImplemented, common.Error{Error: "Not Implemented"})
+		//TODO move to go-genesys
+		results, err := cfgDB.Engine.Query("SELECT DISTINCT name FROM dbo.cfg_group")
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, common.Error{Error: err.Error()})
+			return
+		}
+		list := make([]string, len(results))
+		for i, r := range results {
+			list[i] = strings.TrimSpace(string(r["name"]))
+		}
+		c.JSON(200, list)
+	})
+
+	r.GET("/cfg/groups/:name/users", func(c *gin.Context) {
+		// swagger:operation GET /cfg/groups/{name}/users config cfgGroups
+		// ---
+		// summary: Get group agent list
+		// produces:
+		// - application/json
+		// parameters:
+		// - name: name
+		//   in: path
+		//   description: name of group
+		//   type: string
+		//   required: true
+		// responses:
+		//   "400":
+		//     "$ref": "#/responses/BadRequest"
+		//   "500":
+		//     "$ref": "#/responses/InternalServerError"
+		//   "200":
+		//     "description": Agent dbid list
+
+		//c.JSON(http.StatusNotImplemented, common.Error{Error: "Not Implemented"})
+		//TODO move to go-genesys
+		results, err := cfgDB.Engine.Query("SELECT agent_dbid FROM dbo.cfg_agent_group INNER JOIN dbo.cfg_group ON cfg_group.dbid = cfg_agent_group.group_dbid WHERE cfg_group.name = ?", c.Param("name"))
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, common.Error{Error: err.Error()})
+			return
+		}
+		list := make([]string, len(results))
+		for i, r := range results {
+			list[i] = strings.TrimSpace(string(r["agent_dbid"]))
+		}
+		c.JSON(200, list)
+	})
+
 	r.GET("/cfg/places/:dbid", func(c *gin.Context) {
-		// swagger:operation GET /cfg/places/{dbid} site cfgPlace
+		// swagger:operation GET /cfg/places/{dbid} config cfgPlace
 		// ---
 		// summary: Get info on a place
 		// produces:
@@ -53,7 +115,7 @@ func SetupRouter(r *gin.RouterGroup, rtmeDB, cfgDB *db.DB) {
 
 		//c.JSON(http.StatusNotImplemented, common.Error{Error: "Not Implemented"})
 		//TODO move to go-genesys
-		results, err := cfgDB.Engine.Query(fmt.Sprintf("SELECT dbid, name, state, csid, tenant_csid, capacity_dbid, site_dbid, contract_dbid FROM dbo.cfg_place WHERE dbid = '%s'", c.Param("dbid")))
+		results, err := cfgDB.Engine.Query("SELECT dbid, name, state, csid, tenant_csid, capacity_dbid, site_dbid, contract_dbid FROM dbo.cfg_place WHERE dbid = ?", c.Param("dbid"))
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, common.Error{Error: err.Error()})
 			return
@@ -77,7 +139,7 @@ func SetupRouter(r *gin.RouterGroup, rtmeDB, cfgDB *db.DB) {
 	}
 
 	r.GET("rtme/:date/status", func(c *gin.Context) {
-		// swagger:operation GET /rtme/{date}/status site rtmeStatus
+		// swagger:operation GET /rtme/{date}/status rtme rtmeStatus
 		// ---
 		// summary: Export rtme info of status.
 		// produces:
@@ -122,7 +184,7 @@ func SetupRouter(r *gin.RouterGroup, rtmeDB, cfgDB *db.DB) {
 	}
 
 	r.GET("rtme/:date/login", func(c *gin.Context) {
-		// swagger:operation GET /rtme/{date}/login site rtmeLogin
+		// swagger:operation GET /rtme/{date}/login rtme rtmeLogin
 		// ---
 		// summary: Export rtme info of login.
 		// produces:
