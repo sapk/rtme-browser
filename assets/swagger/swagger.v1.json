@@ -79,6 +79,9 @@
           },
           "400": {
             "$ref": "#/responses/BadRequest"
+          },
+          "500": {
+            "$ref": "#/responses/InternalServerError"
           }
         }
       }

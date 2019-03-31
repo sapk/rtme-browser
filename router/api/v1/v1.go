@@ -23,8 +23,11 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"github.com/sapk/go-genesys/db"
+	"github.com/sapk/go-genesys/db/rtme"
 	"github.com/sapk/rtme-browser/router/api/common"
 )
+
+//TODO manage db lock in go-genesys
 
 //SetupRouter configure the listener
 func SetupRouter(r *gin.RouterGroup, rtmeDB, cfgDB *db.DB) {
@@ -64,6 +67,7 @@ func SetupRouter(r *gin.RouterGroup, rtmeDB, cfgDB *db.DB) {
 			"name": string(results[0]["name"]),
 		})
 	})
+
 	r.GET("rtme/:date/status", func(c *gin.Context) {
 		// swagger:operation GET /rtme/{date}/status site rtmeStatus
 		// ---
@@ -87,6 +91,7 @@ func SetupRouter(r *gin.RouterGroup, rtmeDB, cfgDB *db.DB) {
 		//     "description": Status info
 		c.JSON(http.StatusNotImplemented, common.Error{Error: "Not Implemented"})
 	})
+
 	r.GET("rtme/:date/login", func(c *gin.Context) {
 		// swagger:operation GET /rtme/{date}/login site rtmeLogin
 		// ---
@@ -106,8 +111,19 @@ func SetupRouter(r *gin.RouterGroup, rtmeDB, cfgDB *db.DB) {
 		// responses:
 		//   "400":
 		//     "$ref": "#/responses/BadRequest"
+		//   "500":
+		//     "$ref": "#/responses/InternalServerError"
 		//   "200":
 		//     "description": Logins info
-		c.JSON(http.StatusNotImplemented, common.Error{Error: "Not Implemented"})
+
+		sessions, err := rtme.FormattedLoginEntriesOfDay(rtmeDB, c.Param("date"))
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, common.Error{Error: err.Error()})
+			return
+		}
+
+		//TODO filter by group
+
+		c.JSON(http.StatusOK, sessions)
 	})
 }
