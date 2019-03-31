@@ -75,7 +75,8 @@
         ],
         "responses": {
           "200": {
-            "description": "Logins info"
+            "description": "Logins info",
+            "$ref": "#/responses/RTMELoginResponse"
           },
           "400": {
             "$ref": "#/responses/BadRequest"
@@ -113,10 +114,14 @@
         ],
         "responses": {
           "200": {
-            "description": "Status info"
+            "description": "Status info",
+            "$ref": "#/responses/RTMEStatusResponse"
           },
           "400": {
             "$ref": "#/responses/BadRequest"
+          },
+          "500": {
+            "$ref": "#/responses/InternalServerError"
           }
         }
       }
@@ -133,6 +138,104 @@
         }
       },
       "x-go-package": "github.com/sapk/rtme-browser/router/api/common"
+    },
+    "FormattedLoginResp": {
+      "description": "FormattedLoginResp format the login to be used by api",
+      "type": "object",
+      "properties": {
+        "End": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "Sessions": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Session"
+            }
+          }
+        },
+        "Start": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "Users": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "x-go-package": "github.com/sapk/rtme-browser/vendor/github.com/sapk/go-genesys/db/rtme"
+    },
+    "FormattedStatusResp": {
+      "description": "FormattedStatusResp format the status to be used by api",
+      "type": "object",
+      "properties": {
+        "End": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "Start": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "Status": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/StatusEvent"
+          }
+        }
+      },
+      "x-go-package": "github.com/sapk/rtme-browser/vendor/github.com/sapk/go-genesys/db/rtme"
+    },
+    "Session": {
+      "description": "Session a login session",
+      "type": "object",
+      "properties": {
+        "End": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "Place": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "Start": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "x-go-package": "github.com/sapk/rtme-browser/vendor/github.com/sapk/go-genesys/db/rtme"
+    },
+    "StatusEvent": {
+      "description": "StatusEvent a status event",
+      "type": "object",
+      "properties": {
+        "Agent": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "End": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "Place": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "Start": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "Status": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "x-go-package": "github.com/sapk/rtme-browser/vendor/github.com/sapk/go-genesys/db/rtme"
     }
   },
   "responses": {
@@ -166,6 +269,18 @@
       "description": "InternalServerError is a InternalServerError format response",
       "schema": {
         "$ref": "#/definitions/Error"
+      }
+    },
+    "RTMELoginResponse": {
+      "description": "RTMELoginResponse is a RTMELoginResponse format response",
+      "schema": {
+        "$ref": "#/definitions/FormattedLoginResp"
+      }
+    },
+    "RTMEStatusResponse": {
+      "description": "RTMEStatusResponse is a RTMEStatusResponse format response",
+      "schema": {
+        "$ref": "#/definitions/FormattedStatusResp"
       }
     }
   }

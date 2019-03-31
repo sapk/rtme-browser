@@ -68,6 +68,14 @@ func SetupRouter(r *gin.RouterGroup, rtmeDB, cfgDB *db.DB) {
 		})
 	})
 
+	// RTMEStatusResponse is a RTMEStatusResponse format response
+	// swagger:response RTMEStatusResponse
+	type RTMEStatusResponse struct {
+		// The response
+		// in: body
+		Body rtme.FormattedStatusResp
+	}
+
 	r.GET("rtme/:date/status", func(c *gin.Context) {
 		// swagger:operation GET /rtme/{date}/status site rtmeStatus
 		// ---
@@ -87,10 +95,31 @@ func SetupRouter(r *gin.RouterGroup, rtmeDB, cfgDB *db.DB) {
 		// responses:
 		//   "400":
 		//     "$ref": "#/responses/BadRequest"
+		//   "500":
+		//     "$ref": "#/responses/InternalServerError"
 		//   "200":
+		//     "$ref": "#/responses/RTMEStatusResponse"
 		//     "description": Status info
-		c.JSON(http.StatusNotImplemented, common.Error{Error: "Not Implemented"})
+
+		//c.JSON(http.StatusNotImplemented, common.Error{Error: "Not Implemented"})
+		sessions, err := rtme.FormattedStatusEntriesOfDay(rtmeDB, c.Param("date"))
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, common.Error{Error: err.Error()})
+			return
+		}
+
+		//TODO filter by group
+
+		c.JSON(http.StatusOK, sessions)
 	})
+
+	// RTMELoginResponse is a RTMELoginResponse format response
+	// swagger:response RTMELoginResponse
+	type RTMELoginResponse struct {
+		// The response
+		// in: body
+		Body rtme.FormattedLoginResp
+	}
 
 	r.GET("rtme/:date/login", func(c *gin.Context) {
 		// swagger:operation GET /rtme/{date}/login site rtmeLogin
@@ -114,6 +143,7 @@ func SetupRouter(r *gin.RouterGroup, rtmeDB, cfgDB *db.DB) {
 		//   "500":
 		//     "$ref": "#/responses/InternalServerError"
 		//   "200":
+		//     "$ref": "#/responses/RTMELoginResponse"
 		//     "description": Logins info
 
 		sessions, err := rtme.FormattedLoginEntriesOfDay(rtmeDB, c.Param("date"))
