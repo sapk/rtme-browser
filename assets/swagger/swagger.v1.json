@@ -1,0 +1,154 @@
+{
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "http"
+  ],
+  "swagger": "2.0",
+  "info": {
+    "description": "This documentation describes the RTME/CFG API.",
+    "title": "V1 API.",
+    "version": "1.0.0"
+  },
+  "basePath": "/api/v1",
+  "paths": {
+    "/cfg/places/{dbid}": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "site"
+        ],
+        "summary": "Get info on a place",
+        "operationId": "cfgPlace",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "id of place",
+            "name": "dbid",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Place info"
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          }
+        }
+      }
+    },
+    "/rtme/{date}/login": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "site"
+        ],
+        "summary": "Export rtme info of login.",
+        "operationId": "rtmeLogin",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "date",
+            "name": "date",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "filter by group/instance name",
+            "name": "group",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Logins info"
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          }
+        }
+      }
+    },
+    "/rtme/{date}/status": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "site"
+        ],
+        "summary": "Export rtme info of status.",
+        "operationId": "rtmeStatus",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "date",
+            "name": "date",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "filter by group/instance name",
+            "name": "group",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Status info"
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Error": {
+      "description": "Error is error format response",
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "x-go-name": "Error"
+        }
+      },
+      "x-go-package": "github.com/sapk/rtme-browser/router/api/common"
+    }
+  },
+  "responses": {
+    "BadRequest": {
+      "description": "BadRequest is an bad request error response"
+    },
+    "Error": {
+      "description": "Error is error format response",
+      "headers": {
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "ErrorNotFound": {
+      "description": "ErrorNotFound is a not found format response",
+      "schema": {
+        "$ref": "#/definitions/Error"
+      }
+    },
+    "ErrorUnauthorized": {
+      "description": "ErrorUnauthorized is an unauthorized error response"
+    }
+  }
+}
