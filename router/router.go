@@ -8,7 +8,7 @@ import (
 
 	"github.com/sapk/go-genesys/db"
 
-	//"github.com/sapk/rtme-browser/public/swagger"
+	"github.com/sapk/rtme-browser/public/swagger"
 	//"github.com/sapk/rtme-browser/public/ui"
 	v1 "github.com/sapk/rtme-browser/router/api/v1"
 )
@@ -32,7 +32,7 @@ func generateRouter(rtmeDB, cfgDB *db.DB) *gin.Engine {
 
 	//TODO handler for direct FS package gzip
 	//r.StaticFS("/ui", ui.FS(false))
-	//r.StaticFS("/swagger", swagger.FS(false))
+	r.StaticFS("/swagger", swagger.FS(false))
 	r.GET("/", func(c *gin.Context) {
 		c.Redirect(http.StatusMovedPermanently, "/ui/")
 	})

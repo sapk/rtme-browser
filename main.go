@@ -1,5 +1,7 @@
 package main
 
+//go:generate esc -pkg=swagger -prefix=assets/swagger -ignore='.*.map' -o public/swagger/swagger.go assets/swagger/
+
 import (
 	"flag"
 	"net/url"
