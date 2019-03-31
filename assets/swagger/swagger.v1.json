@@ -16,13 +16,68 @@
   },
   "basePath": "/api/v1",
   "paths": {
+    "/cfg/groups": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "config"
+        ],
+        "summary": "Get group name list",
+        "operationId": "cfgGroups",
+        "responses": {
+          "200": {
+            "description": "Groups names"
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "500": {
+            "$ref": "#/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/cfg/groups/{name}/users": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "config"
+        ],
+        "summary": "Get group agent list",
+        "operationId": "cfgGroups",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "name of group",
+            "name": "name",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Agent dbid list"
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "500": {
+            "$ref": "#/responses/InternalServerError"
+          }
+        }
+      }
+    },
     "/cfg/places/{dbid}": {
       "get": {
         "produces": [
           "application/json"
         ],
         "tags": [
-          "site"
+          "config"
         ],
         "summary": "Get info on a place",
         "operationId": "cfgPlace",
@@ -54,7 +109,7 @@
           "application/json"
         ],
         "tags": [
-          "site"
+          "rtme"
         ],
         "summary": "Export rtme info of login.",
         "operationId": "rtmeLogin",
@@ -93,7 +148,7 @@
           "application/json"
         ],
         "tags": [
-          "site"
+          "rtme"
         ],
         "summary": "Export rtme info of status.",
         "operationId": "rtmeStatus",
