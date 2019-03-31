@@ -26,7 +26,7 @@
             >
               <small>{{hour(session.Start)}} -> {{hour(session.End)}} ({{placeDetails(session.Place)}})</small>
             </a>
-            <a
+            <!-- <a
               v-for="(status, id) in statusByUser(user)"
               :key="user+'-'+id"
               :title="hour(status.Start)+' -> '+hour(status.End)+' ('+translateStatus(status.Status)+')'"
@@ -34,7 +34,7 @@
               class="time-entry status-entry"
               :class="'status-entry-'+status.Status"
               v-bind:style="{ width: (status.End-status.Start)*100/86400 + '%', left: (status.Start-timeline.Start)*100/86400 + '%' }"
-            ></a>
+            ></a> -->
           </li>
         </ul>
       </div>
@@ -298,8 +298,8 @@ export default {
       }
     },
     hour: function(timestamp) {
-      var date = new Date(timestamp * 1000);
-      return date.toLocaleTimeString().substring(0, 5);
+      var date = new Date((timestamp+(new Date()).getTimezoneOffset()*60) * 1000);
+      return date.toTimeString().substring(0, 5);
     },
     //todo TRANSLATE STATUS
     statusByUser: function(user) {

@@ -40,10 +40,10 @@ export default {
     Timesheet
   },
   data: function() {
-    var today = new Date();
+    //var today = new Date();
     return {
       selectedDate: "2018-09-10",
-      //today.toISOString().substring(0, 10),
+      //(new Date()).toISOString().substring(0, 10),
       selectedGroup: "Tous",
       //groups: ["S1", "S2"],
       places: {}
