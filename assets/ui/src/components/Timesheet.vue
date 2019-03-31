@@ -304,6 +304,9 @@ export default {
     //todo TRANSLATE STATUS
     statusByUser: function(user) {
       var v = this;
+      if (v.status === null) {
+        return {}
+      }
       var dbid = v.timeline.Users[user];
       return v.status.Status.filter(s => s.Agent == dbid);
     },
