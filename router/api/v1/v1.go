@@ -17,6 +17,7 @@
 package v1
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -42,9 +43,26 @@ func SetupRouter(r *gin.RouterGroup, rtmeDB, cfgDB *db.DB) {
 		// responses:
 		//   "400":
 		//     "$ref": "#/responses/BadRequest"
+		//   "500":
+		//     "$ref": "#/responses/InternalServerError"
 		//   "200":
 		//     "description": Place info
-		c.JSON(http.StatusNotImplemented, common.Error{Error: "Not Implemented"})
+
+		//c.JSON(http.StatusNotImplemented, common.Error{Error: "Not Implemented"})
+		//TODO move to go-genesys
+		results, err := cfgDB.Engine.Query(fmt.Sprintf("SELECT dbid, name, state, csid, tenant_csid, capacity_dbid, site_dbid, contract_dbid FROM dbo.cfg_place WHERE dbid = '%s'", c.Param("dbid")))
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, common.Error{Error: err.Error()})
+			return
+		}
+		if len(results) == 0 {
+			c.JSON(http.StatusNotFound, common.Error{Error: "Place not found"})
+			return
+		}
+
+		c.JSON(200, map[string]string{
+			"name": string(results[0]["name"]),
+		})
 	})
 	r.GET("rtme/:date/status", func(c *gin.Context) {
 		// swagger:operation GET /rtme/{date}/status site rtmeStatus

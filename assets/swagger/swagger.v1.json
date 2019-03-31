@@ -41,6 +41,9 @@
           },
           "400": {
             "$ref": "#/responses/BadRequest"
+          },
+          "500": {
+            "$ref": "#/responses/InternalServerError"
           }
         }
       }
@@ -131,7 +134,10 @@
   },
   "responses": {
     "BadRequest": {
-      "description": "BadRequest is an bad request error response"
+      "description": "BadRequest is an bad request error response",
+      "schema": {
+        "$ref": "#/definitions/Error"
+      }
     },
     "Error": {
       "description": "Error is error format response",
@@ -148,7 +154,16 @@
       }
     },
     "ErrorUnauthorized": {
-      "description": "ErrorUnauthorized is an unauthorized error response"
+      "description": "ErrorUnauthorized is an unauthorized error response",
+      "schema": {
+        "$ref": "#/definitions/Error"
+      }
+    },
+    "InternalServerError": {
+      "description": "InternalServerError is a InternalServerError format response",
+      "schema": {
+        "$ref": "#/definitions/Error"
+      }
     }
   }
 }
