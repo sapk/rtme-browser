@@ -8,6 +8,7 @@ go mod vendor
 (cd assets/ui/ && yarn build)
 go generate
 gox -ldflags "-s -w" -output="build/{{.Dir}}-{{.OS}}-{{.Arch}}"
+upx -7 ./build/rtme-browser-{windows,linux}-*
 ```
 
 ## Sources
