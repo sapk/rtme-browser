@@ -33,7 +33,7 @@ require (
 	github.com/prometheus/client_model v0.0.0-20190129233127-fd36f4220a90 // indirect
 	github.com/prometheus/procfs v0.0.0-20190328153300-af7bedc223fb // indirect
 	github.com/rs/zerolog v1.13.0
-	github.com/sapk/go-genesys v0.0.0-20190331124516-bac3c468d78a
+	github.com/sapk/go-genesys v0.0.0-20190401000344-03c3fc2c8be8
 	github.com/sirupsen/logrus v1.4.0 // indirect
 	go4.org v0.0.0-20190313082347-94abd6928b1d // indirect
 	golang.org/x/build v0.0.0-20190328203648-c72a0eda0790 // indirect
