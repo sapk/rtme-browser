@@ -1,5 +1,14 @@
 # RTME-BROWSER
 
+Display information from RTME table
+
+## Build
+```
+go mod vendor
+(cd assets/ui/ && yarn build)
+go generate
+gox -ldflags "-s -w" -output="build/{{.Dir}}-{{.OS}}-{{.Arch}}"
+```
 
 ## Sources
 
