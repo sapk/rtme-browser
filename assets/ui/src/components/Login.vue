@@ -94,7 +94,7 @@ export default {
           localStorage.setItem('rtmeRTME', this.rtme);
           localStorage.setItem('rtmeCFG', this.cfg);
           await api.SetAppConfig(this.type, this.rtmeURL, this.cfgURL)
-          window.location.reload(); ; //dead simple (a little too much)
+          window.location.reload(); //dead simple (a little too much)
       }
   }
 };

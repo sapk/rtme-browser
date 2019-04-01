@@ -1,10 +1,18 @@
 <template>
-  <div>
-    <select v-model="selectedGroup">
-      <option>Tous</option>
-      <option v-for="g in groups" :key="g">{{g}}</option>
-    </select>
-    <input type="date" id="day" v-model="selectedDate" required="required">
+  <div class="container">
+    <div class="columns">
+      <div class="column col-2 hide-sm"></div>
+      <div class="column col-4 col-sm-11 m-2">
+        <select v-model="selectedGroup" class="form-select select-lg">
+          <option>Tous</option>
+          <option v-for="g in groups" :key="g">{{g}}</option>
+        </select>
+      </div>
+      <div class="column col-4 col-sm-11 m-2">
+        <input type="date" id="day" v-model="selectedDate" required="required" class="form-input">
+      </div>
+      <div class="column col-2 hide-sm"></div>
+    </div>
     <br>
     <br>
     <br>
@@ -13,13 +21,6 @@
 </template>
 
 <style>
-input[type="date"] {
-  padding: 7px;
-  padding-bottom: 7px;
-  display: inline-block;
-  margin-left: 4px;
-  padding-bottom: 5px;
-}
 </style>
 
 
@@ -30,7 +31,7 @@ import api from "@/lib/api";
 
 export default {
   components: {
-    Timesheet,
+    Timesheet
   },
   data: function() {
     return {
