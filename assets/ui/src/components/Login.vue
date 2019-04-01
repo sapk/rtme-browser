@@ -76,10 +76,20 @@ export default {
         cfg: "",
     };
   },
-  asyncComputed: {},
+  computed: {
+    rtmeURL: function () {
+      //TODO support other db types
+      return "server="+this.host+";user id="+this.user+";password="+this.pass+";database="+this.rtme+""
+    },
+    cfgURL: function () {
+      //TODO support other db types
+      return "server="+this.host+";user id="+this.user+";password="+this.pass+";database="+this.cfg+""
+    }
+  },
   methods: {
-      connect: function () {
-          api.SetAppConfig(this.type, "TODO", "TODO")
+      connect: async function () {
+          await api.SetAppConfig(this.type, this.rtmeURL, this.cfgURL)
+          window.location.reload(); ; //dead simple (a little too much)
       }
   }
 };
