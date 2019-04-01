@@ -22,15 +22,89 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/sapk/go-genesys/db"
 	"github.com/sapk/go-genesys/db/rtme"
+	"github.com/sapk/rtme-browser/module/config"
 	"github.com/sapk/rtme-browser/router/api/common"
 )
 
 //TODO manage db lock in go-genesys
 
 //SetupRouter configure the listener
-func SetupRouter(r *gin.RouterGroup, rtmeDB, cfgDB *db.DB) {
+func SetupRouter(r *gin.RouterGroup) {
+	r.GET("/app/status", func(c *gin.Context) {
+		// swagger:operation GET /app/status app appStatus
+		// ---
+		// summary: Get app status
+		// produces:
+		// - application/json
+		// responses:
+		//   "200":
+		//     "description": status response
+
+		if config.IsNotInit() {
+			c.JSON(200, map[string]string{
+				"status": "init",
+			})
+		}
+		c.JSON(200, map[string]string{
+			"status": "ready",
+		})
+	})
+	r.POST("/app/config", func(c *gin.Context) {
+		// swagger:operation POST /app/config app appConfig
+		// ---
+		// summary: Setup app config
+		// produces:
+		// - application/json
+		// parameters:
+		// - name: DBTYPE
+		//   in: body
+		//   description: db type
+		//   type: string
+		//   required: true
+		// - name: DBRTMEURL
+		//   in: body
+		//   description: db rtme url
+		//   type: string
+		//   required: true
+		// - name: DBCFGURL
+		//   in: body
+		//   description: db cfg url
+		//   type: string
+		//   required: true
+		// responses:
+		//   "400":
+		//     "$ref": "#/responses/BadRequest"
+		//   "500":
+		//     "$ref": "#/responses/InternalServerError"
+		//   "204":
+		//     "description": No Content
+
+		var configObj struct {
+			DBTYPE    string `form:"DBTYPE"`
+			DBRTMEURL string `form:"DBRTMEURL"`
+			DBCFGURL  string `form:"DBCFGURL"`
+		}
+		err := c.Bind(&configObj)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, common.Error{Error: err.Error()})
+			return
+		}
+		err = config.Setup(configObj.DBTYPE, configObj.DBRTMEURL, configObj.DBCFGURL)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, common.Error{Error: err.Error()})
+			return
+		}
+		if config.IsNotInit() {
+			c.JSON(200, map[string]string{
+				"status": "init",
+			})
+		}
+		c.JSON(200, map[string]string{
+			"status": "ready",
+		})
+	})
+
 	r.GET("/cfg/groups", func(c *gin.Context) {
 		// swagger:operation GET /cfg/groups config cfgGroups
 		// ---
@@ -47,7 +121,7 @@ func SetupRouter(r *gin.RouterGroup, rtmeDB, cfgDB *db.DB) {
 
 		//c.JSON(http.StatusNotImplemented, common.Error{Error: "Not Implemented"})
 		//TODO move to go-genesys
-		results, err := cfgDB.Engine.Query("SELECT DISTINCT name FROM dbo.cfg_group")
+		results, err := config.Get().CFG.Engine.Query("SELECT DISTINCT name FROM dbo.cfg_group")
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, common.Error{Error: err.Error()})
 			return
@@ -81,7 +155,7 @@ func SetupRouter(r *gin.RouterGroup, rtmeDB, cfgDB *db.DB) {
 
 		//c.JSON(http.StatusNotImplemented, common.Error{Error: "Not Implemented"})
 		//TODO move to go-genesys
-		results, err := cfgDB.Engine.Query("SELECT agent_dbid FROM dbo.cfg_agent_group INNER JOIN dbo.cfg_group ON cfg_group.dbid = cfg_agent_group.group_dbid WHERE cfg_group.name = ?", c.Param("name"))
+		results, err := config.Get().CFG.Engine.Query("SELECT agent_dbid FROM dbo.cfg_agent_group INNER JOIN dbo.cfg_group ON cfg_group.dbid = cfg_agent_group.group_dbid WHERE cfg_group.name = ?", c.Param("name"))
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, common.Error{Error: err.Error()})
 			return
@@ -115,7 +189,7 @@ func SetupRouter(r *gin.RouterGroup, rtmeDB, cfgDB *db.DB) {
 
 		//c.JSON(http.StatusNotImplemented, common.Error{Error: "Not Implemented"})
 		//TODO move to go-genesys
-		results, err := cfgDB.Engine.Query("SELECT dbid, name, state, csid, tenant_csid, capacity_dbid, site_dbid, contract_dbid FROM dbo.cfg_place WHERE dbid = ?", c.Param("dbid"))
+		results, err := config.Get().CFG.Engine.Query("SELECT dbid, name, state, csid, tenant_csid, capacity_dbid, site_dbid, contract_dbid FROM dbo.cfg_place WHERE dbid = ?", c.Param("dbid"))
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, common.Error{Error: err.Error()})
 			return
@@ -164,7 +238,7 @@ func SetupRouter(r *gin.RouterGroup, rtmeDB, cfgDB *db.DB) {
 		//     "description": Status info
 
 		//c.JSON(http.StatusNotImplemented, common.Error{Error: "Not Implemented"})
-		sessions, err := rtme.FormattedStatusEntriesOfDay(rtmeDB, c.Param("date"))
+		sessions, err := rtme.FormattedStatusEntriesOfDay(config.Get().RTME, c.Param("date"))
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, common.Error{Error: err.Error()})
 			return
@@ -208,7 +282,7 @@ func SetupRouter(r *gin.RouterGroup, rtmeDB, cfgDB *db.DB) {
 		//     "$ref": "#/responses/RTMELoginResponse"
 		//     "description": Logins info
 
-		sessions, err := rtme.FormattedLoginEntriesOfDay(rtmeDB, c.Param("date"))
+		sessions, err := rtme.FormattedLoginEntriesOfDay(config.Get().RTME, c.Param("date"))
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, common.Error{Error: err.Error()})
 			return

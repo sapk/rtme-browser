@@ -9,13 +9,11 @@ import (
 	"time"
 
 	"github.com/rs/zerolog/log"
-
-	"github.com/sapk/go-genesys/db"
 )
 
 //StartServer start the server
-func StartServer(u url.URL, allowCORS bool, rtmeDB, cfgDB *db.DB) {
-	r := generateRouter(allowCORS, rtmeDB, cfgDB)
+func StartServer(u url.URL, allowCORS bool) {
+	r := generateRouter(allowCORS)
 	// Listen and Server (endlessly) on http://0.0.0.0:3000
 	srv := &http.Server{
 		Addr:    u.Host,

@@ -1,21 +1,30 @@
 package config
 
-import "github.com/sapk/go-genesys/db"
+import (
+	"fmt"
+
+	"github.com/sapk/go-genesys/db"
+)
+
+//Config hold the config and db access
+type Config struct {
+	RTME *db.DB
+	CFG  *db.DB
+}
 
 var (
-	dBRTME *db.DB
-	dBCFG *db.DB
+	config *Config
 )
 
 //TODO manage lock
 
 //IsNotInit state if the config is not init
-func IsNotInit() bool  {
-	return dBRTME == nil || dBCFG == nil
+func IsNotInit() bool {
+	return config == nil
 }
 
 //Setup start the db connexion
-func Setup(dbType, dbRTMEURL, dbCFGURL string) error  {
+func Setup(dbType, dbRTMEURL, dbCFGURL string) error {
 	rtmeDB, err := db.NewDBFromURL(dbType, dbRTMEURL)
 	if err != nil {
 		return err
@@ -24,7 +33,17 @@ func Setup(dbType, dbRTMEURL, dbCFGURL string) error  {
 	if err != nil {
 		return err
 	}
-	dBCFG = cfgDB
-	dBRTME = rtmeDB
+	config = &Config{
+		RTME: rtmeDB,
+		CFG:  cfgDB,
+	}
 	return nil
+}
+
+//Get give access to the config object
+func Get() (*Config, error) {
+	if IsNotInit() {
+		return nil, fmt.Errorf("Config is not set")
+	}
+	return config, nil
 }

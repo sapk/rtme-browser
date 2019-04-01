@@ -7,14 +7,12 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
 
-	"github.com/sapk/go-genesys/db"
-
 	"github.com/sapk/rtme-browser/public/swagger"
 	"github.com/sapk/rtme-browser/public/ui"
 	v1 "github.com/sapk/rtme-browser/router/api/v1"
 )
 
-func generateRouter(allowCORS bool, rtmeDB, cfgDB *db.DB) *gin.Engine {
+func generateRouter(allowCORS bool) *gin.Engine {
 	r := gin.New()
 	//Configure logger
 	r.Use(logger())
@@ -35,7 +33,7 @@ func generateRouter(allowCORS bool, rtmeDB, cfgDB *db.DB) *gin.Engine {
 		api.Use(options)
 	}
 	//API v1
-	v1.SetupRouter(api, rtmeDB, cfgDB)
+	v1.SetupRouter(api)
 
 	//TODO handler for direct FS package gzip
 	r.StaticFS("/ui", ui.FS(false))

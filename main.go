@@ -38,7 +38,7 @@ func main() {
 	})
 
 	u := parseAddr(*listenAddr)
-	quit := startServer(u, *allowCORS, *dbType)
+	quit := startServer(u, *allowCORS)
 	if !*noWebview {
 		go startWebview(u)
 	}
