@@ -1,6 +1,8 @@
 # RTME-BROWSER
 
-Display information from RTME table
+Display informations from RTME table
+
+based on: https://github.com/sapk/go-genesys
 
 ## Build
 ```
