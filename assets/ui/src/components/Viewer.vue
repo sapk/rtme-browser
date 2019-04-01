@@ -13,14 +13,14 @@
       </div>
       <div class="column col-2 hide-sm"></div>
     </div>
-    <br>
-    <br>
-    <br>
     <Timesheet :timeline="timeline" :status="status"/>
   </div>
 </template>
 
 <style>
+input[type="date"]{
+  height: 40px;
+}
 </style>
 
 
