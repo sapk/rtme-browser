@@ -2,6 +2,10 @@ import axios from "axios";
 
 class API {
   //TODO use cache
+  async GetAppStatus() {
+    let response = await axios.get("api/v1/app/status");
+    return response.data;
+  }
   async GetGroups() {
     let response = await axios.get("api/v1/cfg/groups");
     return response.data;
