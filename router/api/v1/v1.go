@@ -45,11 +45,13 @@ func SetupRouter(r *gin.RouterGroup) {
 			c.JSON(200, map[string]string{
 				"status": "init",
 			})
+			return
 		}
 		c.JSON(200, map[string]string{
 			"status": "ready",
 		})
 	})
+
 	r.POST("/app/config", func(c *gin.Context) {
 		// swagger:operation POST /app/config app appConfig
 		// ---
@@ -81,9 +83,9 @@ func SetupRouter(r *gin.RouterGroup) {
 		//     "description": No Content
 
 		var configObj struct {
-			DBTYPE    string `form:"DBTYPE"`
-			DBRTMEURL string `form:"DBRTMEURL"`
-			DBCFGURL  string `form:"DBCFGURL"`
+			DBTYPE    string `form:"DBTYPE" json:"DBTYPE"`
+			DBRTMEURL string `form:"DBRTMEURL" json:"DBRTMEURL"`
+			DBCFGURL  string `form:"DBCFGURL" json:"DBCFGURL"`
 		}
 		err := c.Bind(&configObj)
 		if err != nil {
@@ -99,6 +101,7 @@ func SetupRouter(r *gin.RouterGroup) {
 			c.JSON(200, map[string]string{
 				"status": "init",
 			})
+			return
 		}
 		c.JSON(200, map[string]string{
 			"status": "ready",

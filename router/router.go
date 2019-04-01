@@ -47,6 +47,7 @@ func cors(c *gin.Context) {
 	c.Header("Access-Control-Allow-Origin", c.GetHeader("Origin")) //TODO Filter
 	c.Header("Vary", "Origin")
 }
+
 func options(c *gin.Context) {
 	if c.Request.Method != "OPTIONS" {
 		c.Next()

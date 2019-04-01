@@ -6,6 +6,14 @@ class API {
     let response = await axios.get("api/v1/app/status");
     return response.data;
   }
+  async SetAppConfig(DBTYPE, DBRTMEURL, DBCFGURL) {
+    let response = await axios.post("api/v1/app/config",{
+      DBTYPE: DBTYPE,
+      DBRTMEURL: DBRTMEURL,
+      DBCFGURL: DBCFGURL
+    });
+    return response.data;
+  }
   async GetGroups() {
     let response = await axios.get("api/v1/cfg/groups");
     return response.data;
