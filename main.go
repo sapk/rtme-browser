@@ -23,6 +23,7 @@ import (
 func main() {
 	//TODO use cobra for validation and use env and file config
 	debug := flag.Bool("v", false, "sets log level to debug")
+	noBrowser := flag.Bool("no-browser", false, "de-activate the start of the browser")
 	listenAddr := flag.String("addr", ":3000", "listening address")
 	allowCORS := flag.Bool("cors", false, "allow cors")
 	dbType := flag.String("db-type", "mssql", "database address")
@@ -41,7 +42,9 @@ func main() {
 
 	u := parseAddr(*listenAddr)
 	quit := startServer(u, *allowCORS, *dbType, *dbRTMEURL, *dbCFGURL)
-	go startBrowser(u)
+	if !*noBrowser {
+		go startBrowser(u)
+	}
 	<-quit //Wait for quit
 }
 

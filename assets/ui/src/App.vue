@@ -5,7 +5,9 @@
       <option v-for="g in groups" :key="g">{{g}}</option>
     </select>
     <input type="date" id="day" v-model="selectedDate" required="required">
-    <br/><br/><br/>
+    <br>
+    <br>
+    <br>
     <Timesheet :timeline="timeline" :status="status"/>
   </div>
 </template>
@@ -40,10 +42,9 @@ export default {
     Timesheet
   },
   data: function() {
-    //var today = new Date();
     return {
-      selectedDate: "2018-09-10",
-      //(new Date()).toISOString().substring(0, 10),
+      //selectedDate: "2018-09-10",
+      selectedDate: new Date().toISOString().substring(0, 10),
       selectedGroup: "Tous",
       //groups: ["S1", "S2"],
       places: {}
@@ -59,6 +60,6 @@ export default {
     status: function() {
       return api.GetTimelineStatus(this.selectedDate, this.selectedGroup);
     }
-  },
+  }
 };
 </script>
