@@ -16,6 +16,69 @@
   },
   "basePath": "/api/v1",
   "paths": {
+    "/app/config": {
+      "post": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "app"
+        ],
+        "summary": "Setup app config",
+        "operationId": "appConfig",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "db type",
+            "name": "DBTYPE",
+            "in": "body",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "db rtme url",
+            "name": "DBRTMEURL",
+            "in": "body",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "db cfg url",
+            "name": "DBCFGURL",
+            "in": "body",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "500": {
+            "$ref": "#/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/app/status": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "app"
+        ],
+        "summary": "Get app status",
+        "operationId": "appStatus",
+        "responses": {
+          "200": {
+            "description": "status response"
+          }
+        }
+      }
+    },
     "/cfg/groups": {
       "get": {
         "produces": [

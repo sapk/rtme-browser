@@ -42,7 +42,7 @@ func main() {
 	if !*noWebview {
 		go startWebview(u)
 	}
-	if !*browser {
+	if *browser {
 		go startBrowser(u)
 	}
 	<-quit //Wait for quit
@@ -65,7 +65,18 @@ func startBrowser(u url.URL) {
 }
 
 func startWebview(u url.URL) {
-	webview.Open("rtme-browser", u.String(), 800, 600, true)
+	//webview.Open("rtme-browser", u.String(), 800, 600, true)
+
+	w := webview.New(true)
+	w.Navigate(u.String())
+	w.SetTitle("rtme-browser")
+	//TODO set_size
+	/*
+		w.Dispatch(func() {
+			println("Hello dispatch")
+		})
+	*/
+	w.Run()
 }
 
 func parseAddr(addr string) url.URL {

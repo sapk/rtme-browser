@@ -121,7 +121,12 @@ func SetupRouter(r *gin.RouterGroup) {
 
 		//c.JSON(http.StatusNotImplemented, common.Error{Error: "Not Implemented"})
 		//TODO move to go-genesys
-		results, err := config.Get().CFG.Engine.Query("SELECT DISTINCT name FROM dbo.cfg_group")
+		cfg, err := config.Get()
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, common.Error{Error: err.Error()})
+			return
+		}
+		results, err := cfg.CFG.Engine.Query("SELECT DISTINCT name FROM dbo.cfg_group")
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, common.Error{Error: err.Error()})
 			return
@@ -155,7 +160,12 @@ func SetupRouter(r *gin.RouterGroup) {
 
 		//c.JSON(http.StatusNotImplemented, common.Error{Error: "Not Implemented"})
 		//TODO move to go-genesys
-		results, err := config.Get().CFG.Engine.Query("SELECT agent_dbid FROM dbo.cfg_agent_group INNER JOIN dbo.cfg_group ON cfg_group.dbid = cfg_agent_group.group_dbid WHERE cfg_group.name = ?", c.Param("name"))
+		cfg, err := config.Get()
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, common.Error{Error: err.Error()})
+			return
+		}
+		results, err := cfg.CFG.Engine.Query("SELECT agent_dbid FROM dbo.cfg_agent_group INNER JOIN dbo.cfg_group ON cfg_group.dbid = cfg_agent_group.group_dbid WHERE cfg_group.name = ?", c.Param("name"))
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, common.Error{Error: err.Error()})
 			return
@@ -189,7 +199,12 @@ func SetupRouter(r *gin.RouterGroup) {
 
 		//c.JSON(http.StatusNotImplemented, common.Error{Error: "Not Implemented"})
 		//TODO move to go-genesys
-		results, err := config.Get().CFG.Engine.Query("SELECT dbid, name, state, csid, tenant_csid, capacity_dbid, site_dbid, contract_dbid FROM dbo.cfg_place WHERE dbid = ?", c.Param("dbid"))
+		cfg, err := config.Get()
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, common.Error{Error: err.Error()})
+			return
+		}
+		results, err := cfg.CFG.Engine.Query("SELECT dbid, name, state, csid, tenant_csid, capacity_dbid, site_dbid, contract_dbid FROM dbo.cfg_place WHERE dbid = ?", c.Param("dbid"))
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, common.Error{Error: err.Error()})
 			return
@@ -238,7 +253,12 @@ func SetupRouter(r *gin.RouterGroup) {
 		//     "description": Status info
 
 		//c.JSON(http.StatusNotImplemented, common.Error{Error: "Not Implemented"})
-		sessions, err := rtme.FormattedStatusEntriesOfDay(config.Get().RTME, c.Param("date"))
+		cfg, err := config.Get()
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, common.Error{Error: err.Error()})
+			return
+		}
+		sessions, err := rtme.FormattedStatusEntriesOfDay(cfg.RTME, c.Param("date"))
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, common.Error{Error: err.Error()})
 			return
@@ -282,7 +302,12 @@ func SetupRouter(r *gin.RouterGroup) {
 		//     "$ref": "#/responses/RTMELoginResponse"
 		//     "description": Logins info
 
-		sessions, err := rtme.FormattedLoginEntriesOfDay(config.Get().RTME, c.Param("date"))
+		cfg, err := config.Get()
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, common.Error{Error: err.Error()})
+			return
+		}
+		sessions, err := rtme.FormattedLoginEntriesOfDay(cfg.RTME, c.Param("date"))
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, common.Error{Error: err.Error()})
 			return
