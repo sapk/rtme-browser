@@ -26,7 +26,7 @@
             >
               <small>{{hour(session.Start)}} -> {{hour(session.End)}} ({{placeDetails(session.Place)}})</small>
             </a>
-            <!-- <a
+            <a
               v-for="(status, id) in statusByUser(user)"
               :key="user+'-'+id"
               :title="hour(status.Start)+' -> '+hour(status.End)+' ('+translateStatus(status.Status)+')'"
@@ -34,7 +34,7 @@
               class="time-entry status-entry"
               :class="'status-entry-'+status.Status"
               v-bind:style="{ width: (status.End-status.Start)*100/86400 + '%', left: (status.Start-timeline.Start)*100/86400 + '%' }"
-            ></a> -->
+            ></a>
           </li>
         </ul>
       </div>
@@ -230,6 +230,7 @@ input[type="date"]::-webkit-inner-spin-button {
 
 <script>
 import api from "@/lib/api";
+import {statusCode} from "@/lib/api";
 
 export default {
   props: ["group", "timeline", "status"],
@@ -260,42 +261,7 @@ export default {
   */
   methods: {
     translateStatus: function(status) {
-      switch (
-        status //TODO use an array
-      ) {
-        case "4":
-          return "Ready";
-        case "5":
-          return "OffHook";
-        case "6":
-          return "CallDialing";
-        case "7":
-          return "CallRinging";
-        case "8":
-          return "NotReadyForNextCall";
-        case "9":
-          return "AfterCallWork";
-        case "13":
-          return "CallOnHold";
-        case "16":
-          return "ASM_Engaged";
-        case "17":
-          return "ASM_Outbound";
-        case "18":
-          return "CallUnknown";
-        case "19":
-          return "CallConsult";
-        case "20":
-          return "CallInternal";
-        case "21":
-          return "CallOutbound";
-        case "22":
-          return "CallInbound";
-        case "23":
-          return "LoggedOut";
-        default:
-          return status;
-      }
+      return statusCode[status] || status
     },
     hour: function(timestamp) {
       var date = new Date((timestamp+(new Date()).getTimezoneOffset()*60) * 1000);
