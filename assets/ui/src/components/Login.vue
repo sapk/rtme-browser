@@ -34,7 +34,7 @@
           <label class="form-label text-left" for="input-pass">Password</label>
         </div>
         <div class="column col-10 col-lg-9 col-sm-12">
-          <input class="form-input" type="text" id="input-pass" placeholder="Password" v-model="pass">
+          <input class="form-input" type="password" id="input-pass" placeholder="Password" v-model="pass">
         </div>
       </div>
       <div class="form-group">
@@ -68,12 +68,12 @@ import api from "@/lib/api";
 export default {
   data: function() {
     return {
-        type: "mssql", //default
-        host: "",
-        user: "",
-        pass: "",
-        rtme: "",
-        cfg: "",
+        type: localStorage.rtmeType || "mssql", //default
+        host: localStorage.rtmeHost,
+        user: localStorage.rtmeUser,
+        pass: localStorage.rtmePass,
+        rtme: localStorage.rtmeRTME,
+        cfg: localStorage.rtmeCFG,
     };
   },
   computed: {
@@ -88,6 +88,11 @@ export default {
   },
   methods: {
       connect: async function () {
+          localStorage.setItem('rtmeType', this.type);
+          localStorage.setItem('rtmeHost', this.host);
+          localStorage.setItem('rtmeUser', this.user);
+          localStorage.setItem('rtmeRTME', this.rtme);
+          localStorage.setItem('rtmeCFG', this.cfg);
           await api.SetAppConfig(this.type, this.rtmeURL, this.cfgURL)
           window.location.reload(); ; //dead simple (a little too much)
       }
