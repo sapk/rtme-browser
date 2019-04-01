@@ -14,6 +14,7 @@ import (
 	"github.com/pkg/browser"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
+	"github.com/zserge/webview"
 
 	"github.com/sapk/go-genesys/db"
 
@@ -23,7 +24,8 @@ import (
 func main() {
 	//TODO use cobra for validation and use env and file config
 	debug := flag.Bool("v", false, "sets log level to debug")
-	noBrowser := flag.Bool("no-browser", false, "de-activate the start of the browser")
+	noWebview := flag.Bool("no-webview", false, "de-activate the start of the webview")
+	browser := flag.Bool("browser", false, "de-activate the start of the browser")
 	listenAddr := flag.String("addr", ":3000", "listening address")
 	allowCORS := flag.Bool("cors", false, "allow cors")
 	dbType := flag.String("db-type", "mssql", "database address")
@@ -42,7 +44,10 @@ func main() {
 
 	u := parseAddr(*listenAddr)
 	quit := startServer(u, *allowCORS, *dbType, *dbRTMEURL, *dbCFGURL)
-	if !*noBrowser {
+	if !*noWebview {
+		go startWebview(u)
+	}	
+	if !*browser {
 		go startBrowser(u)
 	}
 	<-quit //Wait for quit
@@ -75,6 +80,10 @@ func startServer(u url.URL, allowCORS bool, dbType, dbRTMEURL, dbCFGURL string) 
 
 func startBrowser(u url.URL) {
 	browser.OpenURL(u.String())
+}
+
+func startWebview(u url.URL) {
+	webview.Open("rtme-browser",u.String(), 800, 600, true)
 }
 
 func parseAddr(addr string) url.URL {
