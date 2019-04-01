@@ -16,8 +16,6 @@ import (
 	"github.com/rs/zerolog/log"
 	"github.com/zserge/webview"
 
-	"github.com/sapk/go-genesys/db"
-
 	"github.com/sapk/rtme-browser/router"
 )
 
@@ -26,7 +24,7 @@ func main() {
 	debug := flag.Bool("v", false, "sets log level to debug")
 	noWebview := flag.Bool("no-webview", false, "de-activate the start of the webview")
 	browser := flag.Bool("browser", false, "de-activate the start of the browser")
-	listenAddr := flag.String("addr", ":3000", "listening address")
+	listenAddr := flag.String("addr", "localhost:3000", "listening address")
 	allowCORS := flag.Bool("cors", false, "allow cors")
 
 	flag.Parse()
@@ -43,7 +41,7 @@ func main() {
 	quit := startServer(u, *allowCORS, *dbType)
 	if !*noWebview {
 		go startWebview(u)
-	}	
+	}
 	if !*browser {
 		go startBrowser(u)
 	}
@@ -67,7 +65,7 @@ func startBrowser(u url.URL) {
 }
 
 func startWebview(u url.URL) {
-	webview.Open("rtme-browser",u.String(), 800, 600, true)
+	webview.Open("rtme-browser", u.String(), 800, 600, true)
 }
 
 func parseAddr(addr string) url.URL {
