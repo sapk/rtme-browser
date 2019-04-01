@@ -28,9 +28,6 @@ func main() {
 	browser := flag.Bool("browser", false, "de-activate the start of the browser")
 	listenAddr := flag.String("addr", ":3000", "listening address")
 	allowCORS := flag.Bool("cors", false, "allow cors")
-	dbType := flag.String("db-type", "mssql", "database address")
-	dbRTMEURL := flag.String("db-rtme", "server=localhost;user id=sa;password=g3n3sys;database=RTME", "RTME database url definition (xorm definition)")
-	dbCFGURL := flag.String("db-cfg", "server=localhost;user id=sa;password=g3n3sys;database=CFG", "CFG database url definition (xorm definition)")
 
 	flag.Parse()
 
@@ -43,7 +40,7 @@ func main() {
 	})
 
 	u := parseAddr(*listenAddr)
-	quit := startServer(u, *allowCORS, *dbType, *dbRTMEURL, *dbCFGURL)
+	quit := startServer(u, *allowCORS, *dbType)
 	if !*noWebview {
 		go startWebview(u)
 	}	
@@ -53,26 +50,13 @@ func main() {
 	<-quit //Wait for quit
 }
 
-func startServer(u url.URL, allowCORS bool, dbType, dbRTMEURL, dbCFGURL string) chan bool {
+func startServer(u url.URL, allowCORS bool) chan bool {
 	quit := make(chan bool)
-	//DB connexion
-	rtmeDB, err := db.NewDBFromURL(dbType, dbRTMEURL)
-	if err != nil {
-		log.Fatal().Err(err).Msg("Failed to connect to RTME database")
-		quit <- true
-		return quit
-	}
-	cfgDB, err := db.NewDBFromURL(dbType, dbCFGURL)
-	if err != nil {
-		log.Fatal().Err(err).Msg("Failed to connect to CFG database")
-		quit <- true
-		return quit
-	}
 
 	//Setup server
 	gin.SetMode(gin.ReleaseMode)
 	go func() {
-		router.StartServer(u, allowCORS, rtmeDB, cfgDB)
+		router.StartServer(u, allowCORS)
 		quit <- true
 	}()
 	return quit

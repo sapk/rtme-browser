@@ -13,6 +13,8 @@ gox -ldflags "-s -w" -output="build/{{.Dir}}-{{.OS}}-{{.Arch}}"
 upx -7 ./build/rtme-browser-{windows,linux}-*
 ```
 
+Windows specific: `go build -ldflags "-s -w -H windowsgui" -o build/rtme-browser-windows-amd64.exe` 
+
 ## Sources
 
  - icon: https://www.iconfinder.com/icons/2044249/checklist_list_icon 
