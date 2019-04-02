@@ -9,7 +9,9 @@ based on: https://github.com/sapk/go-genesys
 go mod vendor
 (cd assets/ui/ && yarn build)
 go generate
-gox -ldflags "-s -w" -output="build/{{.Dir}}-{{.OS}}-{{.Arch}}"
+gox -os="darwin" -ldflags "-s -w" -output="build/{{.Dir}}-{{.OS}}-{{.Arch}}"
+gox -os="linux" -ldflags "-s -w" -output="build/{{.Dir}}-{{.OS}}-{{.Arch}}"
+gox -os="windows" -ldflags "-s -w -H windowsgui" -output="build/{{.Dir}}-{{.OS}}-{{.Arch}}"
 upx -7 ./build/rtme-browser-{windows,linux}-*
 ```
 

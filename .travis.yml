@@ -1,0 +1,34 @@
+language: go
+addons:
+  apt:
+    packages:
+    - upx-ucl
+    - yarn
+go:
+- "1.12"
+env:
+- GO111MODULE=on
+
+install:
+- (cd assets/ui/ && yarn install)
+- go mod vendor
+
+script:
+- (cd assets/ui/ && yarn build)
+- go generate
+- go build ./
+- "./rtme-browser" -h
+
+before_deploy:
+- gox -os="darwin" -ldflags "-s -w" -output="build/{{.Dir}}-{{.OS}}-{{.Arch}}"
+- gox -os="linux" -ldflags "-s -w" -output="build/{{.Dir}}-{{.OS}}-{{.Arch}}"
+- gox -os="windows" -ldflags "-s -w -H windowsgui" -output="build/{{.Dir}}-{{.OS}}-{{.Arch}}"
+- upx -9 ./build/rtme-browser-{windows,linux}-*
+
+deploy:
+  provider: releases
+ file: build/*
+  file_glob: true
+  skip_cleanup: true
+  on:
+    tags: true

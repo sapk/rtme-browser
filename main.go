@@ -7,6 +7,7 @@ package main
 import (
 	"flag"
 	"net/url"
+	"runtime"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -14,7 +15,7 @@ import (
 	"github.com/pkg/browser"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
-	"github.com/zserge/webview"
+	"github.com/zserge/lorca"
 
 	"github.com/sapk/rtme-browser/router"
 )
@@ -65,18 +66,15 @@ func startBrowser(u url.URL) {
 }
 
 func startWebview(u url.URL) {
-	//webview.Open("rtme-browser", u.String(), 800, 600, true)
-
-	w := webview.New(true)
-	w.Navigate(u.String())
-	w.SetTitle("rtme-browser")
-	//TODO set_size
-	/*
-		w.Dispatch(func() {
-			println("Hello dispatch")
-		})
-	*/
-	w.Run()
+	args := []string{}
+	if runtime.GOOS == "linux" {
+		args = append(args, "--class=Lorca")
+	}
+	ui, err := lorca.New("", "", 800, 600, args...)
+	if err != nil {
+		log.Fatal().Err(err).Msg("Failed to start the chrome webview")
+	}
+	ui.Load(u.String())
 }
 
 func parseAddr(addr string) url.URL {

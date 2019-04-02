@@ -1,2 +1,5 @@
+rtme-browser
+*.exe
+
 build/
 vendor/
