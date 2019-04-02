@@ -14,7 +14,8 @@ import (
 	"github.com/pkg/browser"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
-	"github.com/zserge/webview"
+
+	"github.com/sapk-fork/webview"
 
 	"github.com/sapk/rtme-browser/router"
 )

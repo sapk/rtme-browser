@@ -9,7 +9,7 @@ require (
 	github.com/pkg/browser v0.0.0-20180916011732-0a3d74bf9ce4
 	github.com/rs/zerolog v1.13.0
 	github.com/sapk/go-genesys v0.0.0-20190401001325-ea895b59ef21
-	github.com/zserge/webview v0.0.0-20190125144901-4293066e9dda
+	github.com/sapk-fork/webview v0.0.0-20190125144901-4293066e9dda
 )
 
 replace github.com/golang/lint => golang.org/x/lint v0.0.0-20190313153728-d0100b6bd8b3
