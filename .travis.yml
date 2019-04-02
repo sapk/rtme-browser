@@ -27,7 +27,9 @@ before_deploy:
 
 deploy:
   provider: releases
- file: build/*
+  api_key:
+    secure: lSEwCHfihq+pNdi4dtwfcxvyhydabXzURuUpnaIoYfEFbXD9oAjhJr2jyM3dwIteyQ1abf56yA8W86lnwapMkoyn6Yu81PphoQJa9b++1k61xnoJl1fwRYKbtuTNizTuI62pBXbQndp60jrAZGRAdL6CtfzG0USrGCQAAj6yJrOC3X2YGZLN1ZUehJAPA9PFBsJcS8GMdY1XvAJAKYHbKcuIqI731Bms7sElB4REEQzeAyFgwX9iszvrBELCbm0vEnma7JJli1SXvWJvsYJlUnfqjCGKKgtX8TbZl58vVNte8Jol5jYOXdB1Da9pNNtTYxGmMWYe6iUHZGtmh0lcgFwzSiECb0y64QSfypEykPnkALQIw+8/eaKwOjnP5bfdAHlqNKKTeEYnI2DuETT/syMOlZwPiAryol8UALf8KnVFlguUt2QnpHl5bTzhLJZ7KvwRIELc/ki5QkR+zxlyI41i62McVwoEvGge/3q1afTJCPz71GDrd9dTridakcgh0nqSA/6H0sqtGg9SpjVGua9a/v0iVZnGj1EaLyBYbZUIXngC940tu/X3Wr3proJnsqEKw0Amq0zvu8Wp8dkMSL3S48DdIHp1fYoh6lJmppxATe2t2j0NYvcfsPME7tYAj+Z2m/ZErhL+p/79ZntzNV8uaNgXn4dPmXnPkSK2N+I=
+  file: build/*
   file_glob: true
   skip_cleanup: true
   on:
