@@ -13,6 +13,7 @@ before_install:
   - curl -o- -L https://yarnpkg.com/install.sh | bash
   - export PATH="$HOME/.yarn/bin:$PATH"
   - GO111MODULE=off go get -u -v github.com/go-swagger/go-swagger/cmd/swagger
+  - GO111MODULE=off go get -u github.com/mjibson/esc
   - export PATH="$GOPATH/bin:$PATH"
 
 install:  
