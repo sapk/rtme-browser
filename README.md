@@ -8,6 +8,7 @@ based on: https://github.com/sapk/go-genesys
 ```
 go mod vendor
 (cd assets/ui/ && yarn build)
+GO111MODULE=off swagger generate spec -o ./assets/swagger/swagger.v1.json
 go generate
 gox -os="darwin" -ldflags "-s -w" -output="build/{{.Dir}}-{{.OS}}-{{.Arch}}"
 gox -os="linux" -ldflags "-s -w" -output="build/{{.Dir}}-{{.OS}}-{{.Arch}}"

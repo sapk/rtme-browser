@@ -22,6 +22,8 @@ install:
 script:
   - "(cd assets/ui/ && yarn build)"
   - go generate
+  - GO111MODULE=off swagger generate spec -o ./assets/swagger/swagger.v1.json
+  - go generate
   - go build ./
   - "./rtme-browser -h"
 
