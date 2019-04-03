@@ -17,7 +17,10 @@ upx -7 ./build/rtme-browser-{windows,linux}-*
 ```
 
 Windows specific: `go build -ldflags "-s -w -H windowsgui" -o build/rtme-browser-windows-amd64.exe` 
-
+```
+export V=$(git describe --abbrev=0 --tags)
+rcedit "./build/rtme-browser-windows-amd64.exe" --set-icon "assets/ui/public/favicon.ico" --set-file-version "${V#?}"
+```
 ## Sources
 
  - icon: https://www.iconfinder.com/icons/2044249/checklist_list_icon 
