@@ -5,8 +5,7 @@ package main
 
 import (
 	"flag"
-	"fmt"
-	"math/rand"
+	"net"
 	"net/url"
 	"runtime"
 	"strings"
@@ -87,7 +86,22 @@ func parseAddr(addr string) url.URL {
 		u.Host = "0.0.0.0" + u.Host
 	}
 	if u.Port() == "0" {
-		u.Host = fmt.Sprintf("%s:%d", u.Hostname(), 20000+rand.Intn(40000))
+		u.Host = getHostWithFreePort(u.Hostname())
 	}
 	return u
+}
+
+func getHostWithFreePort(host string) string {
+	ln, err := net.Listen("tcp", host+":0")
+
+	if err != nil {
+		log.Fatal().Err(err).Msg("Failed open a tcp listening port")
+	}
+
+	err = ln.Close()
+	if err != nil {
+		log.Fatal().Err(err).Msg("Failed to free a tcp listening port")
+	}
+
+	return ln.Addr().String()
 }
