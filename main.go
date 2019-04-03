@@ -5,6 +5,8 @@ package main
 
 import (
 	"flag"
+	"fmt"
+	"math/rand"
 	"net/url"
 	"runtime"
 	"strings"
@@ -24,7 +26,7 @@ func main() {
 	debug := flag.Bool("v", false, "sets log level to debug")
 	noWebview := flag.Bool("no-webview", false, "de-activate the start of the webview")
 	browser := flag.Bool("browser", false, "de-activate the start of the browser")
-	listenAddr := flag.String("addr", "localhost:3000", "listening address")
+	listenAddr := flag.String("addr", "localhost:0", "listening address")
 	allowCORS := flag.Bool("cors", false, "allow cors")
 
 	flag.Parse()
@@ -83,6 +85,9 @@ func parseAddr(addr string) url.URL {
 	}
 	if strings.HasPrefix(u.Host, ":") {
 		u.Host = "0.0.0.0" + u.Host
+	}
+	if u.Port() == "0" {
+		u.Host = fmt.Sprintf("%s:%d", u.Hostname(), 20000+rand.Intn(40000))
 	}
 	return u
 }
