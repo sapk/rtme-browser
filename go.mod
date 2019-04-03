@@ -9,7 +9,7 @@ require (
 	github.com/pkg/browser v0.0.0-20180916011732-0a3d74bf9ce4
 	github.com/rs/zerolog v1.13.0
 	github.com/sapk/go-genesys v0.0.0-20190401001325-ea895b59ef21
-	github.com/zserge/lorca v0.1.6
+	github.com/zserge/lorca v0.1.7-0.20190327182656-f15fbf8e0e44
 	golang.org/x/net v0.0.0-20190328230028-74de082e2cca // indirect
 	golang.org/x/sys v0.0.0-20190402142545-baf5eb976a8c // indirect
 )
