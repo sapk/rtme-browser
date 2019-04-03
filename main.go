@@ -7,6 +7,7 @@ import (
 	"flag"
 	"net"
 	"net/url"
+	"os"
 	"runtime"
 	"strings"
 
@@ -75,6 +76,9 @@ func startWebview(u url.URL) {
 		log.Fatal().Err(err).Msg("Failed to start the chrome webview")
 	}
 	ui.Load(u.String())
+	// Wait for the browser window to be closed
+	<-ui.Done()
+	os.Exit(0) //Stop all
 }
 
 func parseAddr(addr string) url.URL {
