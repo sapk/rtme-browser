@@ -43,6 +43,10 @@
 </template>
 
 <style>
+.form-input:focus {
+    border-color: #056bb3;
+    box-shadow: 0 0 0 .1rem rgba(87,85,217,.2);
+}
 .btn input[type="date"] {
   background: transparent;
   border: 0;
@@ -128,18 +132,17 @@ input[type="date"]::-webkit-inner-spin-button {
   border-bottom: none;
 }
 .timesheet ul.timeline li:first-of-type {
-  border-top: 1px solid #e5e5e5;
+  border-top: 1px solid #e5e6e7;
 }
 .timesheet ul.timeline li:nth-of-type(2n + 1) {
-  background-color: #fdfdfd;
+  background-color: #f5f6f7;
 }
 .timesheet ul.timeline li {
   position: relative;
-  background-color: #f4f4f4;
+  background-color: #f0f1f2;
 }
 .timesheet .time-entry {
-  background-color: #39bae7;
-  transition: 200ms background-color;
+  background-color: #2682c4;
   height: 37px;
   display: block;
   position: absolute;
@@ -149,7 +152,7 @@ input[type="date"]::-webkit-inner-spin-button {
   white-space: normal;
   overflow: hidden;
   color: #fff;
-  border: 1px solid #3f9ed8;
+  border: 1px solid #056bb3;
   border-radius: 6px;
 }
 .timesheet ul.timeline li::after,
@@ -163,18 +166,18 @@ input[type="date"]::-webkit-inner-spin-button {
   bottom: 0;
 }
 .timesheet ul.timeline li::before {
-  background-image: linear-gradient(to right, #e5e5e5 1px, transparent 1px);
+  background-image: linear-gradient(to right, #e5e6e7 1px, transparent 1px);
   background-size: 21px auto;
 }
 .timesheet ul.timeline li::after {
   background-image: linear-gradient(
     to right,
-    #e5e5e5,
-    #e5e5e5 1px,
-    #f4f4f4 1px,
-    #f4f4f4 2px,
-    #e5e5e5 2px,
-    #e5e5e5 3px,
+    #e5e6e7,
+    #e5e6e7 1px,
+    #f0f1f2 1px,
+    #f0f1f2 2px,
+    #e5e6e7 2px,
+    #e5e6e7 3px,
     transparent 3px,
     transparent
   );

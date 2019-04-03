@@ -59,6 +59,16 @@
 </template>
 
 <style>
+.form-input:focus {
+    border-color: #056bb3;
+    box-shadow: 0 0 0 .1rem rgba(87,85,217,.2);
+}
+button.float-right.btn-lg {
+    background: #2682c4 !important;
+    color: #fff;
+    border: .05rem solid #056bb3 !important;
+    border-radius: .2rem;
+}
 </style>
 
 

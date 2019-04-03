@@ -1,5 +1,5 @@
 <template>
-  <div id="app" v-if="appStatus">
+  <div id="app" class="bg-gray" v-if="appStatus">
     <viewer v-if="appStatus.status === 'ready'" />
     <login v-else />
   </div>
