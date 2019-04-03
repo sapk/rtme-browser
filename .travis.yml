@@ -30,7 +30,7 @@ script:
   - "./rtme-browser -h || echo ''"
 
 before_deploy:
-  - gox -os="darwin" -ldflags "-s -w" -output="build/{{.Dir}}-{{.OS}}-{{.Arch}}"
+  - gox -osarch="darwin/amd64" -ldflags "-s -w" -output="build/{{.Dir}}-{{.OS}}-{{.Arch}}"
   - gox -os="linux" -ldflags "-s -w" -output="build/{{.Dir}}-{{.OS}}-{{.Arch}}"
   - gox -os="windows" -ldflags "-s -w -H windowsgui" -output="build/{{.Dir}}-{{.OS}}-{{.Arch}}"
   - upx -9 ./build/rtme-browser-{windows,linux}-*
