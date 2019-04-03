@@ -26,7 +26,7 @@ script:
   - GO111MODULE=off swagger generate spec -o ./assets/swagger/swagger.v1.json
   - go generate
   - go build ./
-  - "./rtme-browser -h"
+  - "./rtme-browser -h || echo ''"
 
 before_deploy:
   - gox -os="darwin" -ldflags "-s -w" -output="build/{{.Dir}}-{{.OS}}-{{.Arch}}"
