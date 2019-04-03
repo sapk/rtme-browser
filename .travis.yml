@@ -3,7 +3,6 @@ addons:
   apt:
     packages:
     - upx-ucl
-    - yarn
 go:
 - '1.12'
 env:
