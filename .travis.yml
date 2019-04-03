@@ -14,6 +14,7 @@ before_install:
   - export PATH="$HOME/.yarn/bin:$PATH"
   - GO111MODULE=off go get -u -v github.com/go-swagger/go-swagger/cmd/swagger
   - GO111MODULE=off go get -u github.com/mjibson/esc
+  - GO111MODULE=off go get -u github.com/mitchellh/gox
   - export PATH="$GOPATH/bin:$PATH"
 
 install:  
