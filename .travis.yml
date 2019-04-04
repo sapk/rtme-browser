@@ -36,9 +36,8 @@ before_deploy:
   - gox -osarch="linux/386" -ldflags "-s -w" -output="build/{{.Dir}}-{{.OS}}-{{.Arch}}"
   - gox -osarch="linux/arm" -ldflags "-s -w" -output="build/{{.Dir}}-{{.OS}}-{{.Arch}}"
   - export V=$(git describe --abbrev=0 --tags)
-  - goversioninfo -64 -copyright="Antoine GIRARD" -icon="assets/ui/public/favicon.ico" -file-version="${V#?}" -product-version="${V#?}"
+  - goversioninfo -platform-specific -copyright="Antoine GIRARD" -icon="assets/ui/public/favicon.ico" -file-version="${V#?}" -product-version="${V#?}"
   - gox -osarch="windows/amd64" -ldflags "-s -w -H windowsgui" -output="build/{{.Dir}}-{{.OS}}-{{.Arch}}"
-  - goversioninfo -copyright="Antoine GIRARD" -icon="assets/ui/public/favicon.ico" -file-version="${V#?}" -product-version="${V#?}"
   - gox -osarch="windows/386" -ldflags "-s -w -H windowsgui" -output="build/{{.Dir}}-{{.OS}}-{{.Arch}}"
   - upx -9 ./build/rtme-browser-{windows,linux}-*
 
