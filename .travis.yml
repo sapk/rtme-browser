@@ -15,6 +15,7 @@ before_install:
   - GO111MODULE=off go get -u -v github.com/go-swagger/go-swagger/cmd/swagger
   - GO111MODULE=off go get -u -v github.com/mjibson/esc
   - GO111MODULE=off go get -u -v github.com/mitchellh/gox
+  - GO111MODULE=off go get -u -v github.com/josephspurrier/goversioninfo/cmd/goversioninfo
   - export PATH="$GOPATH/bin:$PATH"
 
 install:  
@@ -34,10 +35,11 @@ before_deploy:
   - gox -osarch="linux/amd64" -ldflags "-s -w" -output="build/{{.Dir}}-{{.OS}}-{{.Arch}}"
   - gox -osarch="linux/386" -ldflags "-s -w" -output="build/{{.Dir}}-{{.OS}}-{{.Arch}}"
   - gox -osarch="linux/arm" -ldflags "-s -w" -output="build/{{.Dir}}-{{.OS}}-{{.Arch}}"
-  - gox -os="windows" -ldflags "-s -w -H windowsgui" -output="build/{{.Dir}}-{{.OS}}-{{.Arch}}"
   - export V=$(git describe --abbrev=0 --tags)
-  - rcedit "./build/rtme-browser-windows-amd64.exe" --set-icon "assets/ui/public/favicon.ico" --set-file-version "${V#?}"
-  - rcedit "./build/rtme-browser-windows-386.exe" --set-icon "assets/ui/public/favicon.ico" --set-file-version "${V#?}"
+  - goversioninfo -64 -copyright="Antoine GIRARD" -icon="assets/ui/public/favicon.ico" -file-version="${V#?}" -product-version="${V#?}"
+  - gox -osarch="windows/amd64" -ldflags "-s -w -H windowsgui" -output="build/{{.Dir}}-{{.OS}}-{{.Arch}}"
+  - goversioninfo -copyright="Antoine GIRARD" -icon="assets/ui/public/favicon.ico" -file-version="${V#?}" -product-version="${V#?}"
+  - gox -osarch="windows/386" -ldflags "-s -w -H windowsgui" -output="build/{{.Dir}}-{{.OS}}-{{.Arch}}"
   - upx -9 ./build/rtme-browser-{windows,linux}-*
 
 deploy:
