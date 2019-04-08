@@ -16,6 +16,8 @@ require (
 
 replace github.com/golang/lint => golang.org/x/lint v0.0.0-20190313153728-d0100b6bd8b3
 
+replace github.com/gin-gonic/gin => github.com/sapk-fork/gin v1.3.1-0.20190408114212-05cfa31002e4
+
 //Enfore some version to de-dup
 replace gopkg.in/yaml.v2 => gopkg.in/yaml.v2 v2.2.2
 
@@ -24,8 +26,6 @@ replace cloud.google.com/go => cloud.google.com/go v0.37.2
 replace github.com/denisenkom/go-mssqldb => github.com/denisenkom/go-mssqldb v0.0.0-20190328043727-2183450503ad
 
 replace honnef.co/go/tools => honnef.co/go/tools v0.0.0-20190106161140-3f1c8253044a
-
-replace github.com/gin-gonic/gin => github.com/gin-gonic/gin v1.3.1-0.20190328061400-ce20f107f5dc
 
 replace github.com/gin-contrib/sse => github.com/gin-contrib/sse v0.0.0-20190301062529-5545eab6dad3
 
