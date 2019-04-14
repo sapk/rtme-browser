@@ -8,8 +8,7 @@ import (
 
 //Config hold the config and db access
 type Config struct {
-	RTME *db.DB
-	CFG  *db.DB
+	DB *db.DB
 }
 
 var (
@@ -25,17 +24,25 @@ func IsNotInit() bool {
 
 //Setup start the db connexion
 func Setup(dbType, dbRTMEURL, dbCFGURL string) error {
-	rtmeDB, err := db.NewDBFromURL(dbType, dbRTMEURL)
+	d := db.NewDBFromURL(dbType, dbCFGURL, dbRTMEURL)
+	e, err := d.CFG()
 	if err != nil {
 		return err
 	}
-	cfgDB, err := db.NewDBFromURL(dbType, dbCFGURL)
+	err = e.Ping()
+	if err != nil {
+		return err
+	}
+	e, err = d.RTME()
+	if err != nil {
+		return err
+	}
+	err = e.Ping()
 	if err != nil {
 		return err
 	}
 	config = &Config{
-		RTME: rtmeDB,
-		CFG:  cfgDB,
+		DB: d,
 	}
 	return nil
 }

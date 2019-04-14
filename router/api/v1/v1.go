@@ -129,7 +129,12 @@ func SetupRouter(r *gin.RouterGroup) {
 			c.JSON(http.StatusInternalServerError, common.Error{Error: err.Error()})
 			return
 		}
-		results, err := cfg.CFG.Engine.Query("SELECT DISTINCT name FROM dbo.cfg_group")
+		e, err := cfg.DB.CFG()
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, common.Error{Error: err.Error()})
+			return
+		}
+		results, err := e.Query("SELECT DISTINCT name FROM dbo.cfg_group")
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, common.Error{Error: err.Error()})
 			return
@@ -137,45 +142,6 @@ func SetupRouter(r *gin.RouterGroup) {
 		list := make([]string, len(results))
 		for i, r := range results {
 			list[i] = strings.TrimSpace(string(r["name"]))
-		}
-		c.JSON(200, list)
-	})
-
-	r.GET("/cfg/groups/:name/users", func(c *gin.Context) {
-		// swagger:operation GET /cfg/groups/{name}/users config cfgGroups
-		// ---
-		// summary: Get group agent list
-		// produces:
-		// - application/json
-		// parameters:
-		// - name: name
-		//   in: path
-		//   description: name of group
-		//   type: string
-		//   required: true
-		// responses:
-		//   "400":
-		//     "$ref": "#/responses/BadRequest"
-		//   "500":
-		//     "$ref": "#/responses/InternalServerError"
-		//   "200":
-		//     "description": Agent dbid list
-
-		//c.JSON(http.StatusNotImplemented, common.Error{Error: "Not Implemented"})
-		//TODO move to go-genesys
-		cfg, err := config.Get()
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, common.Error{Error: err.Error()})
-			return
-		}
-		results, err := cfg.CFG.Engine.Query("SELECT agent_dbid FROM dbo.cfg_agent_group INNER JOIN dbo.cfg_group ON cfg_group.dbid = cfg_agent_group.group_dbid WHERE cfg_group.name = ?", c.Param("name"))
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, common.Error{Error: err.Error()})
-			return
-		}
-		list := make([]string, len(results))
-		for i, r := range results {
-			list[i] = strings.TrimSpace(string(r["agent_dbid"]))
 		}
 		c.JSON(200, list)
 	})
@@ -207,7 +173,12 @@ func SetupRouter(r *gin.RouterGroup) {
 			c.JSON(http.StatusInternalServerError, common.Error{Error: err.Error()})
 			return
 		}
-		results, err := cfg.CFG.Engine.Query("SELECT dbid, name, state, csid, tenant_csid, capacity_dbid, site_dbid, contract_dbid FROM dbo.cfg_place WHERE dbid = ?", c.Param("dbid"))
+		e, err := cfg.DB.CFG()
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, common.Error{Error: err.Error()})
+			return
+		}
+		results, err := e.Query("SELECT dbid, name, state, csid, tenant_csid, capacity_dbid, site_dbid, contract_dbid FROM cfg_place WHERE dbid = ?", c.Param("dbid"))
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, common.Error{Error: err.Error()})
 			return
@@ -261,7 +232,7 @@ func SetupRouter(r *gin.RouterGroup) {
 			c.JSON(http.StatusInternalServerError, common.Error{Error: err.Error()})
 			return
 		}
-		sessions, err := rtme.FormattedStatusEntriesOfDay(cfg.RTME, c.Param("date"))
+		sessions, err := rtme.FormattedStatusEntriesOfDay(cfg.DB, c.Param("date"), c.Query("group"))
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, common.Error{Error: err.Error()})
 			return
@@ -310,7 +281,7 @@ func SetupRouter(r *gin.RouterGroup) {
 			c.JSON(http.StatusInternalServerError, common.Error{Error: err.Error()})
 			return
 		}
-		sessions, err := rtme.FormattedLoginEntriesOfDay(cfg.RTME, c.Param("date"))
+		sessions, err := rtme.FormattedLoginEntriesOfDay(cfg.DB, c.Param("date"), c.Query("group"))
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, common.Error{Error: err.Error()})
 			return
