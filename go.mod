@@ -11,7 +11,7 @@ require (
 	github.com/golang/protobuf v1.3.1 // indirect
 	github.com/mattn/go-colorable v0.1.1
 	github.com/pkg/browser v0.0.0-20180916011732-0a3d74bf9ce4
-	github.com/rs/zerolog v1.14.0
+	github.com/rs/zerolog v1.14.3
 	github.com/sapk/go-genesys v0.0.0-20190414232957-bf5629eaf86e
 	github.com/zserge/lorca v0.1.7-0.20190327182656-f15fbf8e0e44
 	golang.org/x/crypto v0.0.0-20190411191339-88737f569e3a // indirect
