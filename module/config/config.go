@@ -50,7 +50,7 @@ func Setup(dbType, dbRTMEURL, dbCFGURL string) error {
 //Get give access to the config object
 func Get() (*Config, error) {
 	if IsNotInit() {
-		return nil, fmt.Errorf("Config is not set")
+		return nil, fmt.Errorf("config is not set")
 	}
 	return config, nil
 }

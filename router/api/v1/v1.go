@@ -197,7 +197,10 @@ func SetupRouter(r *gin.RouterGroup) {
 			c.JSON(http.StatusInternalServerError, common.Error{Error: err.Error()})
 			return
 		}
-		results, err := e.Query("SELECT dbid, name, state, csid, tenant_csid, capacity_dbid, site_dbid, contract_dbid FROM cfg_place WHERE dbid = ?", c.Param("dbid"))
+		results, err := e.Query(`SELECT 
+		dbid, name, state, csid, tenant_csid, capacity_dbid, site_dbid, contract_dbid 
+		FROM cfg_place 
+		WHERE dbid = ?`, c.Param("dbid"))
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, common.Error{Error: err.Error()})
 			return
