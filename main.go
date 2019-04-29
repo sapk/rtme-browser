@@ -63,7 +63,10 @@ func startServer(u url.URL, allowCORS bool) chan bool {
 }
 
 func startBrowser(u url.URL) {
-	browser.OpenURL(u.String())
+	err := browser.OpenURL(u.String())
+	if err != nil {
+		log.Fatal().Err(err).Msg("Failed to start the browser")
+	}
 }
 
 func startWebview(u url.URL) {
@@ -75,7 +78,10 @@ func startWebview(u url.URL) {
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed to start the chrome webview")
 	}
-	ui.Load(u.String())
+	err = ui.Load(u.String())
+	if err != nil {
+		log.Fatal().Err(err).Msg("Failed to setup the chrome webview")
+	}
 	// Wait for the browser window to be closed
 	<-ui.Done()
 	os.Exit(0) //Stop all

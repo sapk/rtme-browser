@@ -31,7 +31,7 @@ func StartServer(u url.URL, allowCORS bool) {
 
 	// Wait for interrupt signal to gracefully shutdown the server with
 	// a timeout of 15 seconds.
-	quit := make(chan os.Signal)
+	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, os.Interrupt)
 	<-quit
 	log.Info().Msg("Shutdown Server ...")

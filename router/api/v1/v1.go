@@ -27,6 +27,25 @@ import (
 	"github.com/sapk/rtme-browser/router/api/common"
 )
 
+var _ = RTMEStatusResponse{}
+var _ = RTMELoginResponse{}
+
+// RTMEStatusResponse is a RTMEStatusResponse format response
+// swagger:response RTMEStatusResponse
+type RTMEStatusResponse struct {
+	// The response
+	// in: body
+	Body rtme.FormattedStatusResp
+}
+
+// RTMELoginResponse is a RTMELoginResponse format response
+// swagger:response RTMELoginResponse
+type RTMELoginResponse struct {
+	// The response
+	// in: body
+	Body rtme.FormattedLoginResp
+}
+
 //TODO manage db lock in go-genesys
 
 //SetupRouter configure the listener
@@ -193,14 +212,6 @@ func SetupRouter(r *gin.RouterGroup) {
 		})
 	})
 
-	// RTMEStatusResponse is a RTMEStatusResponse format response
-	// swagger:response RTMEStatusResponse
-	type RTMEStatusResponse struct {
-		// The response
-		// in: body
-		Body rtme.FormattedStatusResp
-	}
-
 	r.GET("rtme/:date/status", func(c *gin.Context) {
 		// swagger:operation GET /rtme/{date}/status rtme rtmeStatus
 		// ---
@@ -242,14 +253,6 @@ func SetupRouter(r *gin.RouterGroup) {
 
 		c.JSON(http.StatusOK, sessions)
 	})
-
-	// RTMELoginResponse is a RTMELoginResponse format response
-	// swagger:response RTMELoginResponse
-	type RTMELoginResponse struct {
-		// The response
-		// in: body
-		Body rtme.FormattedLoginResp
-	}
 
 	r.GET("rtme/:date/login", func(c *gin.Context) {
 		// swagger:operation GET /rtme/{date}/login rtme rtmeLogin
