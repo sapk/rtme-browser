@@ -16,6 +16,7 @@ before_install:
   - GO111MODULE=off go get -u -v github.com/mjibson/esc
   - GO111MODULE=off go get -u -v github.com/mitchellh/gox
   - GO111MODULE=off go get -u -v github.com/josephspurrier/goversioninfo/cmd/goversioninfo
+  - GO111MODULE=off go get -u -v github.com/golangci/golangci-lint/cmd/golangci-lint
   - export PATH="$GOPATH/bin:$PATH"
 
 install:  
@@ -27,6 +28,7 @@ script:
   - go generate
   - GO111MODULE=off swagger generate spec -o ./assets/swagger/swagger.v1.json
   - go generate
+  - golangci-lint run
   - go build ./
   - "./rtme-browser -h || echo ''"
 
