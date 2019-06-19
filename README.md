@@ -4,6 +4,12 @@ Display informations from RTME table
 
 based on: https://github.com/sapk/go-genesys
 
+# Screenshots
+<img src="https://user-images.githubusercontent.com/4052400/59727736-2bf76180-9237-11e9-9cde-a0607ddc8bdc.PNG" width="480">
+<img src="https://user-images.githubusercontent.com/4052400/59728667-53e8c400-923b-11e9-8216-8ac4e52bed04.PNG" width="1024">
+
+
+
 ## Build
 ```
 go mod vendor
