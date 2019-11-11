@@ -102,38 +102,6 @@
         }
       }
     },
-    "/cfg/groups/{name}/users": {
-      "get": {
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "config"
-        ],
-        "summary": "Get group agent list",
-        "operationId": "cfgGroups",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "name of group",
-            "name": "name",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Agent dbid list"
-          },
-          "400": {
-            "$ref": "#/responses/BadRequest"
-          },
-          "500": {
-            "$ref": "#/responses/InternalServerError"
-          }
-        }
-      }
-    },
     "/cfg/places/{dbid}": {
       "get": {
         "produces": [
@@ -286,7 +254,7 @@
           }
         }
       },
-      "x-go-package": "github.com/sapk/rtme-browser/vendor/github.com/sapk/go-genesys/db/rtme"
+      "x-go-package": "github.com/sapk/go-genesys/db/rtme"
     },
     "FormattedStatusResp": {
       "description": "FormattedStatusResp format the status to be used by api",
@@ -307,7 +275,7 @@
           }
         }
       },
-      "x-go-package": "github.com/sapk/rtme-browser/vendor/github.com/sapk/go-genesys/db/rtme"
+      "x-go-package": "github.com/sapk/go-genesys/db/rtme"
     },
     "Session": {
       "description": "Session a login session",
@@ -326,7 +294,7 @@
           "format": "int64"
         }
       },
-      "x-go-package": "github.com/sapk/rtme-browser/vendor/github.com/sapk/go-genesys/db/rtme"
+      "x-go-package": "github.com/sapk/go-genesys/db/rtme"
     },
     "StatusEvent": {
       "description": "StatusEvent a status event",
@@ -353,7 +321,7 @@
           "format": "int64"
         }
       },
-      "x-go-package": "github.com/sapk/rtme-browser/vendor/github.com/sapk/go-genesys/db/rtme"
+      "x-go-package": "github.com/sapk/go-genesys/db/rtme"
     }
   },
   "responses": {

@@ -5,7 +5,7 @@ package main
 import (
 	"log"
 
-	"gitea.com/sapk/explore/public/swagger"
+	"github.com/sapk/rtme-browser/public/swagger"
 	"github.com/shurcooL/vfsgen"
 )
 

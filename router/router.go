@@ -8,6 +8,7 @@ import (
 	"github.com/rs/zerolog/log"
 
 	"github.com/sapk/rtme-browser/public/swagger"
+	"github.com/sapk/rtme-browser/public/ui"
 	v1 "github.com/sapk/rtme-browser/router/api/v1"
 )
 
@@ -35,8 +36,8 @@ func generateRouter(allowCORS bool) *gin.Engine {
 	v1.SetupRouter(api)
 
 	//TODO handler for direct FS package gzip
-	r.StaticFS("/ui", http.StripPrefix("/ui/", http.FileServer(swagger.Swagger)))
-	r.StaticFS("/swagger", http.StripPrefix("/swagger/", http.FileServer(swagger.Swagger)))
+	r.StaticFS("/swagger", swagger.Swagger)
+	r.StaticFS("/ui", ui.WebApp)
 	r.GET("/", func(c *gin.Context) {
 		c.Redirect(http.StatusMovedPermanently, "/ui/")
 	})

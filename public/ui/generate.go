@@ -1,16 +1,16 @@
 // +build ignore
 
-package ui
+package main
 
 import (
 	"log"
 
-	"gitea.com/sapk/explore/public/webapp"
+	"github.com/sapk/rtme-browser/public/ui"
 	"github.com/shurcooL/vfsgen"
 )
 
 func main() {
-	err := vfsgen.Generate(webapp.WebApp, vfsgen.Options{
+	err := vfsgen.Generate(ui.WebApp, vfsgen.Options{
 		PackageName:  "ui",
 		VariableName: "WebApp",
 		BuildTags:    "!dev",

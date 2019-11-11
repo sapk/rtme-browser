@@ -23,9 +23,9 @@ install:
 
 script:
   - "(cd assets/ui/ && yarn build)"
-  - go generate
+  - go generate -mod=vendor ./...
   - golangci-lint run --enable-all -D gochecknoglobals -D godox
-  - go build ./
+  - go build -mod=vendor ./
   - "./rtme-browser -h || echo ''"
 
 before_deploy:
