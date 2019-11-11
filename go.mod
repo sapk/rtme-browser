@@ -9,7 +9,7 @@ require (
 	github.com/gin-gonic/gin v1.3.1-0.20190328061400-ce20f107f5dc
 	github.com/go-xorm/builder v0.3.4 // indirect
 	github.com/golang/protobuf v1.3.1 // indirect
-	github.com/mattn/go-colorable v0.1.2
+	github.com/mattn/go-colorable v0.1.4
 	github.com/pkg/browser v0.0.0-20180916011732-0a3d74bf9ce4
 	github.com/rs/zerolog v1.14.3
 	github.com/sapk/go-genesys v0.0.0-20190414232957-bf5629eaf86e
