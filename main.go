@@ -1,7 +1,6 @@
 package main
 
-//go:generate esc -pkg=swagger -prefix=assets/swagger -ignore='.*.map' -o public/swagger/swagger.go assets/swagger/
-//go:generate esc -pkg=ui -prefix=assets/ui/dist -ignore='.*.map' -o public/ui/ui.go assets/ui/dist/
+//go:generate go run -mod=vendor github.com/go-swagger/go-swagger/cmd/swagger generate spec -o ./assets/swagger/swagger.v1.json
 
 import (
 	"flag"

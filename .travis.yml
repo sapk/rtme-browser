@@ -12,8 +12,6 @@ before_install:
   - nvm install node
   - curl -o- -L https://yarnpkg.com/install.sh | bash
   - export PATH="$HOME/.yarn/bin:$PATH"
-  - GO111MODULE=off go get -u -v github.com/go-swagger/go-swagger/cmd/swagger
-  - GO111MODULE=off go get -u -v github.com/mjibson/esc
   - GO111MODULE=off go get -u -v github.com/mitchellh/gox
   - GO111MODULE=off go get -u -v github.com/josephspurrier/goversioninfo/cmd/goversioninfo
   - GO111MODULE=off go get -u -v github.com/golangci/golangci-lint/cmd/golangci-lint
@@ -25,8 +23,6 @@ install:
 
 script:
   - "(cd assets/ui/ && yarn build)"
-  - go generate
-  - GO111MODULE=off swagger generate spec -o ./assets/swagger/swagger.v1.json
   - go generate
   - golangci-lint run --enable-all -D gochecknoglobals
   - go build ./

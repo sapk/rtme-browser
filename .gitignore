@@ -3,3 +3,5 @@ rtme-browser
 
 build/
 vendor/
+
+*_vfsdata.go
