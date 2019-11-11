@@ -19,6 +19,7 @@ before_install:
 
 install:  
   - "(cd assets/ui/ && yarn install)"
+  - go mod vendor
 
 script:
   - "(cd assets/ui/ && yarn build)"
