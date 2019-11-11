@@ -14,7 +14,7 @@ based on: https://github.com/sapk/go-genesys
 ```
 go mod vendor
 (cd assets/ui/ && yarn build)
-go generate
+go generate ./...
 gox -os="darwin" -ldflags "-s -w" -output="build/{{.Dir}}-{{.OS}}-{{.Arch}}"
 gox -os="linux" -ldflags "-s -w" -output="build/{{.Dir}}-{{.OS}}-{{.Arch}}"
 gox -os="windows" -ldflags "-s -w -H windowsgui" -output="build/{{.Dir}}-{{.OS}}-{{.Arch}}"
