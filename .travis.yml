@@ -4,7 +4,7 @@ addons:
     packages:
     - upx-ucl
 go:
-- '1.12'
+- '1.13'
 env:
 - GO111MODULE=on
 
@@ -19,12 +19,11 @@ before_install:
 
 install:  
   - "(cd assets/ui/ && yarn install)"
-  - go mod vendor
 
 script:
   - "(cd assets/ui/ && yarn build)"
   - go generate
-  - golangci-lint run --enable-all -D gochecknoglobals
+  - golangci-lint run --enable-all -D gochecknoglobals -D godox
   - go build ./
   - "./rtme-browser -h || echo ''"
 
