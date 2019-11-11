@@ -21,12 +21,11 @@ before_install:
 
 install:  
   - "(cd assets/ui/ && yarn install)"
-  - go generate
-  - go mod vendor
 
 script:
   - "(cd assets/ui/ && yarn build)"
   - go generate
+  - go mod vendor
   - GO111MODULE=off swagger generate spec -o ./assets/swagger/swagger.v1.json
   - go generate
   - golangci-lint run --enable-all -D gochecknoglobals -D godox
