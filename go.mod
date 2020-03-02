@@ -16,7 +16,7 @@ require (
 	github.com/shurcooL/httpfs v0.0.0-20190707220628-8d4bc4ba7749 // indirect
 	github.com/shurcooL/vfsgen v0.0.0-20181202132449-6a9ea43bcacd
 	github.com/ugorji/go v1.1.7 // indirect
-	github.com/zserge/lorca v0.1.8
+	github.com/zserge/lorca v0.1.9
 	golang.org/x/sys v0.0.0-20191110163157-d32e6e3b99c4 // indirect
 	gopkg.in/yaml.v2 v2.2.5 // indirect
 )
