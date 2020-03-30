@@ -5,7 +5,7 @@ go 1.13
 require (
 	github.com/gin-contrib/gzip v0.0.2-0.20190827144029-5602d8b438ea
 	github.com/gin-contrib/sse v0.1.0 // indirect
-	github.com/gin-gonic/gin v1.4.0
+	github.com/gin-gonic/gin v1.6.2
 	github.com/go-swagger/go-swagger v0.21.0
 	github.com/json-iterator/go v1.1.8 // indirect
 	github.com/mattn/go-colorable v0.1.4
