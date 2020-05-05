@@ -169,7 +169,7 @@ func cfgGroup(c *gin.Context) {
 	for i, r := range results {
 		list[i] = strings.TrimSpace(string(r["name"]))
 	}
-	c.JSON(200, list)
+	c.JSON(http.StatusOK, list)
 }
 
 func cfgPlaces(c *gin.Context) {
@@ -217,7 +217,7 @@ func cfgPlaces(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, map[string]string{
+	c.JSON(http.StatusOK, map[string]string{
 		"name": string(results[0]["name"]),
 	})
 }
