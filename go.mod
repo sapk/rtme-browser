@@ -8,7 +8,7 @@ require (
 	github.com/gin-gonic/gin v1.6.3
 	github.com/go-swagger/go-swagger v0.21.0
 	github.com/json-iterator/go v1.1.8 // indirect
-	github.com/mattn/go-colorable v0.1.4
+	github.com/mattn/go-colorable v0.1.6
 	github.com/mattn/go-isatty v0.0.10 // indirect
 	github.com/pkg/browser v0.0.0-20180916011732-0a3d74bf9ce4
 	github.com/rs/zerolog v1.16.0
