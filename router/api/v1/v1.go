@@ -69,12 +69,12 @@ func appStatus(c *gin.Context) {
 	//     "description": status response
 
 	if config.IsNotInit() {
-		c.JSON(200, map[string]string{
+		c.JSON(http.StatusOK, map[string]string{
 			"status": "init",
 		})
 		return
 	}
-	c.JSON(200, map[string]string{
+	c.JSON(http.StatusOK, map[string]string{
 		"status": "ready",
 	})
 }
@@ -124,12 +124,12 @@ func appConfig(c *gin.Context) {
 		return
 	}
 	if config.IsNotInit() {
-		c.JSON(200, map[string]string{
+		c.JSON(http.StatusOK, map[string]string{
 			"status": "init",
 		})
 		return
 	}
-	c.JSON(200, map[string]string{
+	c.JSON(http.StatusOK, map[string]string{
 		"status": "ready",
 	})
 }
