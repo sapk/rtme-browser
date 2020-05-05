@@ -11,6 +11,8 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
+const contextTimeout = 15*time.Second
+
 //StartServer start the server
 func StartServer(u url.URL, allowCORS bool) {
 	r := generateRouter(allowCORS)
@@ -36,7 +38,7 @@ func StartServer(u url.URL, allowCORS bool) {
 	<-quit
 	log.Info().Msg("Shutdown Server ...")
 
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), contextTimeout)
 	defer cancel()
 	if err := srv.Shutdown(ctx); err != nil {
 		log.Fatal().Msgf("Server Shutdown: %v", err)
