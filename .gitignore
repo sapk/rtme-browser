@@ -5,3 +5,6 @@ build/
 vendor/
 
 *_vfsdata.go
+
+public/swagger/swagger.go
+public/ui/ui.go
