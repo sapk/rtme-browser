@@ -21,7 +21,7 @@ require (
 	github.com/onsi/gomega v1.9.0 // indirect
 	github.com/pelletier/go-toml v1.8.0 // indirect
 	github.com/pkg/browser v0.0.0-20180916011732-0a3d74bf9ce4
-	github.com/rs/zerolog v1.19.0
+	github.com/rs/zerolog v1.21.0
 	github.com/sapk/go-genesys v0.0.0-20200327163600-1dba7b4eaf24
 	github.com/shurcooL/httpfs v0.0.0-20190707220628-8d4bc4ba7749 // indirect
 	github.com/shurcooL/vfsgen v0.0.0-20181202132449-6a9ea43bcacd
@@ -29,11 +29,6 @@ require (
 	github.com/stretchr/testify v1.6.0 // indirect
 	github.com/zserge/lorca v0.1.9
 	go.mongodb.org/mongo-driver v1.3.3 // indirect
-	golang.org/x/crypto v0.0.0-20200602180216-279210d13fed // indirect
-	golang.org/x/mod v0.3.0 // indirect
-	golang.org/x/net v0.0.0-20200602114024-627f9648deb9 // indirect
-	golang.org/x/sys v0.0.0-20200602225109-6fdc65e7d980 // indirect
-	golang.org/x/tools v0.0.0-20200601175630-2caf76543d99 // indirect
 	google.golang.org/protobuf v1.24.0 // indirect
 	gopkg.in/check.v1 v1.0.0-20200227125254-8fa46927fb4f // indirect
 	gopkg.in/ini.v1 v1.57.0 // indirect
