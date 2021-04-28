@@ -1,0 +1,14 @@
+version: 2
+updates:
+- package-ecosystem: gomod
+  directory: "/"
+  schedule:
+    interval: weekly
+    time: "10:00"
+  open-pull-requests-limit: 10
+  reviewers:
+  - sapk
+  ignore:
+  - dependency-name: github.com/go-swagger/go-swagger
+    versions:
+    - 0.26.0
