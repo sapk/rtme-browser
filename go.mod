@@ -26,7 +26,7 @@ require (
 	github.com/shurcooL/vfsgen v0.0.0-20181202132449-6a9ea43bcacd
 	github.com/spf13/viper v1.7.0 // indirect
 	github.com/stretchr/testify v1.6.0 // indirect
-	github.com/zserge/lorca v0.1.9
+	github.com/zserge/lorca v0.1.10
 	go.mongodb.org/mongo-driver v1.3.3 // indirect
 	google.golang.org/protobuf v1.24.0 // indirect
 	gopkg.in/check.v1 v1.0.0-20200227125254-8fa46927fb4f // indirect
