@@ -6,7 +6,7 @@ require (
 	github.com/asaskevich/govalidator v0.0.0-20200428143746-21a406dcc535 // indirect
 	github.com/denisenkom/go-mssqldb v0.0.0-20200428022330-06a60b6afbbc // indirect
 	github.com/gin-contrib/gzip v0.0.2-0.20190827144029-5602d8b438ea
-	github.com/gin-gonic/gin v1.7.1
+	github.com/gin-gonic/gin v1.7.3
 	github.com/go-openapi/runtime v0.19.15 // indirect
 	github.com/go-openapi/spec v0.19.8 // indirect
 	github.com/go-openapi/swag v0.19.9 // indirect
