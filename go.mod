@@ -20,7 +20,7 @@ require (
 	github.com/onsi/gomega v1.9.0 // indirect
 	github.com/pelletier/go-toml v1.8.0 // indirect
 	github.com/pkg/browser v0.0.0-20180916011732-0a3d74bf9ce4
-	github.com/rs/zerolog v1.21.0
+	github.com/rs/zerolog v1.25.0
 	github.com/sapk/go-genesys v0.0.0-20200327163600-1dba7b4eaf24
 	github.com/shurcooL/httpfs v0.0.0-20190707220628-8d4bc4ba7749 // indirect
 	github.com/shurcooL/vfsgen v0.0.0-20181202132449-6a9ea43bcacd
