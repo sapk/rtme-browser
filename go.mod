@@ -13,7 +13,7 @@ require (
 	github.com/go-openapi/validate v0.19.8 // indirect
 	github.com/go-swagger/go-swagger v0.23.0
 	github.com/golang/protobuf v1.4.2 // indirect
-	github.com/mattn/go-colorable v0.1.6
+	github.com/mattn/go-colorable v0.1.13
 	github.com/mitchellh/mapstructure v1.3.1 // indirect
 	github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e // indirect
 	github.com/onsi/ginkgo v1.12.0 // indirect
